@@ -1,0 +1,257 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+import gsap, { useGSAP } from "@/libs/gsap";
+import TextReveal from "./TextReveal";
+
+const DESKTOP_RADIUS = 235;
+const MOBILE_RADIUS = 150;
+const POS_LERP = 0.14;
+const RADIUS_LERP = 0.12;
+
+export default function GlassHero() {
+  const heroRef = useRef(null);
+  const baseRef = useRef(null);
+  const bottomRef = useRef(null);
+  const taglineRef = useRef(null);
+
+  // rAF mask state
+  const raw = useRef({ x: -999, y: -999 });
+  const smoothed = useRef({ x: -999, y: -999 });
+  const currentRadius = useRef(0);
+  const targetRadius = useRef(0);
+  const isTouching = useRef(false);
+  const reducedMotion = useRef(false);
+  const frameId = useRef(null);
+
+  // --- GSAP entrance animations (replaces all CSS @keyframes) ---
+  useGSAP(
+    () => {
+      const prefersReduced = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+      const dur = prefersReduced ? 0 : 1;
+
+      // Base image: scale-up reveal
+      gsap.fromTo(
+        baseRef.current,
+        { opacity: 0, scale: 1.035 },
+        { opacity: 1, scale: 1, duration: dur * 1.1, ease: "expo.out" },
+      );
+
+      // Bottom block: fade + slide up
+      gsap.fromTo(
+        bottomRef.current,
+        { opacity: 0, y: "0.6rem" },
+        {
+          opacity: 1,
+          y: 0,
+          duration: dur * 0.9,
+          ease: "expo.out",
+          delay: prefersReduced ? 0 : 0.85,
+        },
+      );
+
+      // Tagline: fade + slide up
+      gsap.fromTo(
+        taglineRef.current,
+        { opacity: 0, y: "0.5rem" },
+        {
+          opacity: 1,
+          y: 0,
+          duration: dur * 0.9,
+          ease: "expo.out",
+          delay: prefersReduced ? 0 : 1.0,
+        },
+      );
+    },
+    { scope: heroRef },
+  );
+
+  // --- rAF loop + pointer/touch/scroll events ---
+  useEffect(() => {
+    const hero = heroRef.current;
+    if (!hero) return;
+
+    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    reducedMotion.current = motionQuery.matches;
+    const handleMotionChange = (e) => {
+      reducedMotion.current = e.matches;
+    };
+    motionQuery.addEventListener("change", handleMotionChange);
+
+    // Single rAF loop — drives the CSS-variable mask position & radius
+    const tick = () => {
+      const posFactor = reducedMotion.current ? 1 : POS_LERP;
+      const radiusFactor = reducedMotion.current ? 1 : RADIUS_LERP;
+
+      smoothed.current.x += (raw.current.x - smoothed.current.x) * posFactor;
+      smoothed.current.y += (raw.current.y - smoothed.current.y) * posFactor;
+      currentRadius.current +=
+        (targetRadius.current - currentRadius.current) * radiusFactor;
+
+      hero.style.setProperty("--reveal-x", `${smoothed.current.x}px`);
+      hero.style.setProperty("--reveal-y", `${smoothed.current.y}px`);
+      hero.style.setProperty(
+        "--reveal-radius",
+        `${Math.max(currentRadius.current, 0)}px`,
+      );
+
+      frameId.current = requestAnimationFrame(tick);
+    };
+    frameId.current = requestAnimationFrame(tick);
+
+    // Desktop pointer
+    const handlePointerEnter = (e) => {
+      if (e.pointerType !== "mouse") return;
+      raw.current.x = e.clientX;
+      raw.current.y = e.clientY;
+      targetRadius.current = DESKTOP_RADIUS;
+    };
+    const handlePointerMove = (e) => {
+      if (e.pointerType === "mouse") {
+        raw.current.x = e.clientX;
+        raw.current.y = e.clientY;
+        return;
+      }
+      if (isTouching.current) {
+        raw.current.x = e.clientX;
+        raw.current.y = e.clientY;
+      }
+    };
+    const handlePointerLeave = (e) => {
+      if (e.pointerType !== "mouse") return;
+      targetRadius.current = 0;
+    };
+
+    // Touch
+    const handlePointerDown = (e) => {
+      if (e.pointerType === "mouse") return;
+      isTouching.current = true;
+      if (typeof hero.setPointerCapture === "function") {
+        try {
+          hero.setPointerCapture(e.pointerId);
+        } catch {
+          /* safe to ignore */
+        }
+      }
+      raw.current.x = e.clientX;
+      raw.current.y = e.clientY;
+      targetRadius.current = MOBILE_RADIUS;
+    };
+    const endTouch = (e) => {
+      if (e.pointerType === "mouse") return;
+      isTouching.current = false;
+      targetRadius.current = 0;
+    };
+
+    hero.addEventListener("pointerenter", handlePointerEnter);
+    hero.addEventListener("pointermove", handlePointerMove);
+    hero.addEventListener("pointerleave", handlePointerLeave);
+    hero.addEventListener("pointerdown", handlePointerDown);
+    hero.addEventListener("pointerup", endTouch);
+    hero.addEventListener("pointercancel", endTouch);
+
+    // Release touch-action once scrolled past hero (Lenis uses window scroll)
+    const updateLock = () => {
+      const pinned = window.scrollY < window.innerHeight * 0.1;
+      hero.style.touchAction = pinned ? "none" : "pan-y";
+    };
+    updateLock();
+    window.addEventListener("scroll", updateLock, { passive: true });
+
+    return () => {
+      if (frameId.current !== null) cancelAnimationFrame(frameId.current);
+      motionQuery.removeEventListener("change", handleMotionChange);
+      hero.removeEventListener("pointerenter", handlePointerEnter);
+      hero.removeEventListener("pointermove", handlePointerMove);
+      hero.removeEventListener("pointerleave", handlePointerLeave);
+      hero.removeEventListener("pointerdown", handlePointerDown);
+      hero.removeEventListener("pointerup", endTouch);
+      hero.removeEventListener("pointercancel", endTouch);
+      window.removeEventListener("scroll", updateLock);
+    };
+  }, []);
+
+  return (
+    <section
+      ref={heroRef}
+      className="relative isolate overflow-hidden min-w-80 min-h-dvh h-dvh bg-[#edf5ff] text-[#0a0d12]"
+      style={{
+        "--reveal-x": "-999px",
+        "--reveal-y": "-999px",
+        "--reveal-radius": "0px",
+      }}
+    >
+      {/* Base image — entrance animated by GSAP (scale + opacity) */}
+      <div
+        ref={baseRef}
+        aria-hidden="true"
+        className="absolute inset-0 bg-[url('/images/Base_image_desktop.png')] max-[767px]:bg-[url('/images/Base_image_mobile.png')] bg-cover bg-center bg-no-repeat gh-base-landscape"
+        style={{ opacity: 0 }}
+      />
+
+      {/* Reveal image — masked by CSS-variable radial gradient (kept in glass-hero.css) */}
+      <div
+        aria-hidden="true"
+        className="gh-reveal absolute inset-0 bg-[url('/images/Reveal_image_desktop.png')] max-[767px]:bg-[url('/images/Reveal_image_mobile.png')] bg-cover bg-center bg-no-repeat pointer-events-none"
+      />
+
+      {/* Content */}
+      <div className="absolute inset-0">
+        {/*
+          Headline — TextReveal handles GSAP SplitText char-by-char entrance.
+          splitBy="chars" stagger gives a sequential letter reveal.
+          delay="0.35" gives the base image time to reveal first.
+          className positions the wrapper div absolutely (TextReveal renders a div).
+          Font is set explicitly to --font-sans because globals.css maps
+          h1/span/h3 → mono via tag selector — we override here.
+        */}
+        <TextReveal
+          splitBy="chars"
+          trigger="mount"
+          delay="0.35"
+          duration={0.9}
+          stagger={0.03}
+          ease="power4.out"
+          className="absolute top-[34%] max-[767px]:top-[15%] left-[max(5.6vw,2rem)] max-[767px]:left-5 max-[767px]:w-[62%] m-0"
+        >
+          <h1
+            className="m-0 font-normal leading-[0.93] tracking-[-0.085em] text-[clamp(5.4rem,6.2vw,6.8rem)] max-[767px]:text-[clamp(2.7rem,12.5vw,3.8rem)] max-[767px]:leading-[0.87]"
+            style={{ fontFamily: "var(--font-sans)" }}
+          >
+            Form
+            <br />
+            Follows
+            <br />
+            Structure
+          </h1>
+        </TextReveal>
+
+        {/* Intro paragraph + CTA — GSAP fade-up via bottomRef */}
+        <div
+          ref={bottomRef}
+          className="absolute left-[max(5.6vw,2rem)] max-[767px]:left-5 max-[767px]:right-5 bottom-[max(3rem,env(safe-area-inset-bottom))] max-[767px]:bottom-[max(2rem,calc(env(safe-area-inset-bottom)+2rem))] max-w-[26rem] max-[767px]:max-w-none flex flex-col items-start gap-[1.4rem]"
+          style={{ opacity: 0 }}
+        >
+          <TextReveal splitBy="words" trigger="mount" delay="1.35" duration={0.9} stagger={0.03} ease="power4.out">
+            <p
+            className="m-0 text-[clamp(1rem,1.1vw,1.15rem)] leading-[1.45] tracking-[-0.01em]"
+            style={{ fontFamily: "var(--font-sans)" }}
+          >
+            I design and build systems where the engineering underneath is as
+            considered as the interface on top
+          </p>
+          </TextReveal>
+          <a
+            href="/project"
+            className="inline-flex items-center justify-center min-h-[44px] px-[1.6rem] rounded-full bg-white text-[#0a0d12] text-[0.8rem] tracking-[0.04em] uppercase no-underline shadow-[0_1px_2px_rgba(10,13,18,0.08),0_8px_24px_rgba(10,13,18,0.06)] transition-[transform,box-shadow] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-px hover:shadow-[0_2px_4px_rgba(10,13,18,0.1),0_12px_28px_rgba(10,13,18,0.09)] focus-visible:-translate-y-px focus-visible:shadow-[0_2px_4px_rgba(10,13,18,0.1),0_12px_28px_rgba(10,13,18,0.09)] focus-visible:outline-none"
+            style={{ fontFamily: "var(--font-mono)" }}
+          >
+            Explore my work
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
