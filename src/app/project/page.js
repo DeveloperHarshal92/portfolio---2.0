@@ -1,7 +1,7 @@
 "use client"
 import InfiniteCarousel from '@/components/InfiniteCarousel'
 import TextReveal from '@/components/TextReveal'
-import { projects } from '@/data/projects'
+import {projects}  from '@/data/projects'
 const page = () => {
   return (
     <div className='w-full h-screen flex flex-col items-center justify-center overflow-hidden'>

@@ -8,7 +8,9 @@ import useViewTransition from "@/hooks/useViewTransition";
 const ProjectPage = ({ project, next }) => {
   const containerRef = useRef(null);
   const imageRef = useRef(null);
+
   useGSAP(() => {
+    if (!project) return;
     const sections = gsap.utils.toArray("section");
 
     gsap.to(imageRef.current, {
@@ -45,12 +47,18 @@ const ProjectPage = ({ project, next }) => {
     });
   });
 
-  const {navigateTo} = useViewTransition();
+  const { navigateTo } = useViewTransition();
 
   const handleNextClick = () => {
-    const nextUrl = `/project/${next.slug}`;
+    if (!next?.slug) return;
+    const nextUrl = `/project/${encodeURIComponent(next.slug)}`;
     navigateTo(nextUrl);
-  }
+  };
+
+  if (!project) return null;
+
+  const galleryItems = Array.isArray(project.gallery) ? project.gallery : [];
+
   return (
     <>
       <main ref={containerRef}>
@@ -58,7 +66,7 @@ const ProjectPage = ({ project, next }) => {
           <div className="sectionContainer h-full w-full flex pt-[7rem] pb-[4rem] px-[3rem] ">
             <div className="firstSegment h-full w-[10%]">
               <TextReveal>
-                <h3 className="text-[2rem]">{project.number}</h3>
+                <h3 className="text-[2rem]">{project.number || "01"}</h3>
               </TextReveal>
             </div>
             <div className="secondSegment h-[85%] w-[30%]">
@@ -67,8 +75,8 @@ const ProjectPage = ({ project, next }) => {
                   ref={imageRef}
                   style={{ clipPath: "inset(0 0 100% 0)" }}
                   className="h-full w-full object-cover scale-[1.4]"
-                  src={project.heroImage}
-                  alt={project.title}
+                  src={project.heroImage || project.coverImage}
+                  alt={project.title || "Project"}
                 />
               </div>
             </div>
@@ -87,7 +95,7 @@ const ProjectPage = ({ project, next }) => {
                 </TextReveal>
               </div>
               <div className="subheading">
-                 <TextReveal delay="0.7" splitBy="words">
+                <TextReveal delay="0.7" splitBy="words">
                   <h1 className="text-[1.2rem]">{project.role}</h1>
                 </TextReveal>
               </div>
@@ -99,25 +107,37 @@ const ProjectPage = ({ project, next }) => {
                 </TextReveal>
               </div>
               <div className="heading mt-5 flex gap-[1rem]">
-                <button className="mr-[2rem] bg-amber-100 px-[1.5rem] py-[0.5rem] rounded-[0.9rem]">
-                  <a className="" href="">
-                    <TextReveal delay="0.7" splitBy="words">
+                {project.githubLink && (
+                  <button className="mr-[2rem] bg-amber-100 px-[1.5rem] py-[0.5rem] rounded-[0.9rem] cursor-pointer hover:opacity-80 transition-opacity">
+                    <a
+                      href={project.githubLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <TextReveal delay="0.7" splitBy="words">
                         Github
-                    </TextReveal>
-                  </a>
-                </button>
-                <button className="mr-[2rem] bg-amber-100 px-[1.5rem] py-[0.5rem] rounded-[0.9rem]">
-                  <a className="" href="">
-                    <TextReveal delay="0.7" splitBy="words">
+                      </TextReveal>
+                    </a>
+                  </button>
+                )}
+                {project.liveLink && (
+                  <button className="mr-[2rem] bg-amber-100 px-[1.5rem] py-[0.5rem] rounded-[0.9rem] cursor-pointer hover:opacity-80 transition-opacity">
+                    <a
+                      href={project.liveLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <TextReveal delay="0.7" splitBy="words">
                         Live
-                    </TextReveal>
-                  </a>
-                </button>
+                      </TextReveal>
+                    </a>
+                  </button>
+                )}
               </div>
             </div>
           </div>
         </section>
-        {project.gallery.map((ele, id) => {
+        {galleryItems.map((ele, id) => {
           return (
             <section key={id} className="h-screen w-full">
               <div
@@ -129,11 +149,15 @@ const ProjectPage = ({ project, next }) => {
             </section>
           );
         })}
-        <footer className="h-screen w-full flex items-center justify-center">
-          <div className="text-center bg-amber-500 px-[3rem] py-[2rem] rounded-[1.5rem] flex flex-col gap-[1rem]">
-            <p onClick={handleNextClick} className="text-[1.2rem]">{next.title} </p>
-          </div>
-        </footer>
+        {next && (
+          <footer className="h-screen w-full flex items-center justify-center">
+            <div className="text-center bg-amber-500 px-[3rem] py-[2rem] rounded-[1.5rem] flex flex-col gap-[1rem] cursor-pointer hover:scale-105 transition-transform">
+              <p onClick={handleNextClick} className="text-[1.2rem]">
+                {next.title}
+              </p>
+            </div>
+          </footer>
+        )}
       </main>
     </>
   );
