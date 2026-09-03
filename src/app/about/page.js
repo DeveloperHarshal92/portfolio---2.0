@@ -49,50 +49,29 @@ export function AboutSection({ showCta = false }) {
               className="flex flex-col gap-5 text-slate-700 leading-relaxed text-base md:text-[1.05rem]"
             >
               <p>
-                I'm <strong>Harshal Varade</strong>, a{" "}
-                <strong>Full-Stack Engineer</strong> based in Pune, India,
-                holding a{" "}
-                <strong>
-                  Bachelor of Engineering in Electronics and Telecommunication{" "}
-                </strong>
-                from Sinhgad College of Engineering (CGPA 7.82). My engineering
-                practice is anchored in building scalable, production-grade
-                applications using modern <strong>JavaScript</strong> and{" "}
-                <strong>TypeScript</strong> architectures.
+                I'm <strong>Harshal Varade</strong>, a full-stack engineer based
+                in Pune, India. I build production-grade applications in
+                JavaScript and TypeScript, and I care as much about the system
+                underneath as the interface on top.
               </p>
 
               <p>
-                On the backend, I architect resilient, decoupled server systems
-                with <strong>Node.js</strong>, <strong>Express</strong>,{" "}
-                <strong>MongoDB</strong>. My implementations security hardened{" "}
-                <strong>JWT</strong> and <strong>bcryptjs</strong>{" "}
-                authentication, multi-device session orchestration, role-based
-                access control, input validation via <strong>Zod</strong>, and
-                low-latency real-time communication using{" "}
-                <strong>Socket.IO</strong> and <strong>WebSockets</strong>,
-                alongside transactional payment pipelines integrated with{" "}
-                <strong>Razorpay</strong>.
+                On the backend: Node.js and Express services backed by MongoDB,
+                with hardened JWT authentication, role-based access control, and
+                real-time features over Socket.IO. Payments run through
+                Razorpay.
               </p>
 
               <p>
-                Beyond standard web architectures, I engineer{" "}
-                <strong>AI-augmented</strong> platforms and intelligent systems.
-                My projects include a <strong> full-stack search engine orchestrating 9
-                concurrent LLM providers </strong> (OpenAI, Google Gemini, Mistral) with
-                LangChain document pipelines and Tavily web retrieval, as well as
-                autonomous retail billing software (Smart Trolly 2.0)
-                incorporating ONNX Runtime machine learning for in-aisle product
+                I also build AI-augmented tools — a search engine that
+                coordinates multiple LLM providers through LangChain, and Smart
+                Trolly, a retail billing system using ONNX Runtime for in-aisle
                 recommendations.
               </p>
 
               <p>
-                With hands-on software development experience from engineering
-                internships at <strong>Mass IT Solutions</strong> and <strong>Cognifyz Technologies</strong>, I
-                bridge backend robustness with high-performance frontend craft.
-                Utilizing <strong>React 19</strong>, <strong>Next.js</strong>, <strong>Redux Toolkit</strong>, and
-                hardware-accelerated <strong>GSAP motion</strong>, I strive to build software
-                where architectural discipline matches the clarity of the user
-                interface.
+                My frontend work is React 19, Next.js, and GSAP — shaped by
+                internships at Mass IT Solutions and Cognifyz Technologies.
               </p>
             </div>
 
@@ -128,6 +107,7 @@ export function AboutSection({ showCta = false }) {
           {/* Right Column: 3D Realistic ID Card Lanyard - Aligned Vertically with Narrative */}
           <div className="lg:col-span-5 flex justify-center items-center w-full">
             <Lanyard
+              strapLength={0.6}
               frontImage="/images/harshal-portrait.png"
               position={[0, 0, 21]}
               gravity={[0, -35, 0]}
