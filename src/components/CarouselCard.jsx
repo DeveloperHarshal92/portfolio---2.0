@@ -3,8 +3,8 @@ import TextReveal from "./TextReveal";
 import gsap from "@/libs/gsap";
 import useViewTransition from "@/hooks/useViewTransition";
 
-const CARD_W = 180;
-const CARD_H = 250;
+const CARD_W = 330;
+const CARD_H = 350;
 const SCALE = 1.35;
 
 const CarouselCard = ({ project, onHoverStart, onHoverEnd }) => {
@@ -12,6 +12,8 @@ const CarouselCard = ({ project, onHoverStart, onHoverEnd }) => {
   const imgRef = useRef(null);
   const numRef = useRef(null);
   const titleRef = useRef(null);
+
+  const titlePanelRef = useRef(null);
 
   const onEnter = () => {
     onHoverStart?.();
@@ -25,6 +27,13 @@ const CarouselCard = ({ project, onHoverStart, onHoverEnd }) => {
 
     gsap.to(imgRef.current, {
       scale: 1.2,
+      duration: 0.3,
+      ease: "power3.out",
+    });
+
+    gsap.to(titlePanelRef.current, {
+      opacity: 1,
+      y: 0,
       duration: 0.3,
       ease: "power3.out",
     });
@@ -49,6 +58,13 @@ const CarouselCard = ({ project, onHoverStart, onHoverEnd }) => {
       ease: "power3.out",
     });
 
+    gsap.to(titlePanelRef.current, {
+      opacity: 0,
+      y: 6,
+      duration: 0.25,
+      ease: "power3.out",
+    });
+
     numRef.current?.reverse();
     titleRef.current?.reverse();
   };
@@ -56,7 +72,7 @@ const CarouselCard = ({ project, onHoverStart, onHoverEnd }) => {
   const { navigateTo } = useViewTransition();
 
   const handleClick = () => {
-    navigateTo(`/project/${project.slug}`);
+    navigateTo(`/project/${encodeURIComponent(project.slug)}`);
   };
 
   return (
@@ -66,35 +82,46 @@ const CarouselCard = ({ project, onHoverStart, onHoverEnd }) => {
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
       style={{ width: CARD_W, height: CARD_H, flexShrink: 0 }}
-      className="relative cursor-pointer overflow-visible"
+      className="relative cursor-pointer overflow-visible flex items-start justify-start group"
     >
-      {/* Title Panel */}
+      {/* Title Panel - Only visible on hover */}
       <div
-        style={{ bottom: "calc(100% + 1.5rem)" }}
-        className="titlePanel absolute left-0 pointer-events-none flex flex-col gap-[0.8rem]"
+        ref={titlePanelRef}
+        style={{
+          bottom: "calc(100% + 1.25rem)",
+          opacity: 0,
+          transform: "translate(-50%, 6px)",
+        }}
+        className="titlePanel absolute left-1/2 w-[220px] pointer-events-none flex flex-col items-start text-start gap-1.5"
       >
         <TextReveal
           ref={numRef}
           duration="0.25"
           trigger="manual"
           splitBy="chars"
+          className="flex justify-center"
         >
-          <h3 className="text-[1rem] text-[#010101]">{project.number}</h3>
+          <span className="text-[1rem] font-mono tracking-widest text-slate-500 uppercase text-center">
+            {project.number}
+          </span>
         </TextReveal>
         <TextReveal
           ref={titleRef}
           duration="0.25"
           trigger="manual"
           splitBy="words"
+          className="flex justify-center"
         >
-          <h3 className="text-[1rem] text-[#010101]">{project.title}</h3>
+          <h3 className="text-[3rem] sm:text-[1.5rem] font-medium text-slate-900 leading-tight tracking-tight text-center">
+            {project.slug}
+          </h3>
         </TextReveal>
       </div>
 
-      <div className="imgDiv absolute h-full w-full overflow-hidden">
+      <div className="imgDiv absolute inset-0 overflow-hidden shadow-lg bg-slate-900">
         <img
           style={{ transformOrigin: "center center", userSelect: "none" }}
-          className="h-full w-full object-cover scale-[1.6]"
+          className="h-full w-full object-cover scale-[1.5]"
           ref={imgRef}
           src={project.coverImage}
           alt={project.title}

@@ -113,7 +113,7 @@ function Band({
   const strapTexture = useTexture(lanyardImage || BLANK_PIXEL);
   const frontTex = useTexture(frontImage || BLANK_PIXEL);
 
-  // 2048 x 3072 Ultra-Crisp Front ID Texture for Light Theme
+  // 2048 x 3072 Ultra-Crisp Realistic Engineering ID Badge
   const frontCardMap = useMemo(() => {
     const W = 2048;
     const H = 3072;
@@ -123,96 +123,180 @@ function Band({
     const ctx = canvas.getContext("2d");
     if (!ctx) return new THREE.Texture();
 
-    // Solid clean white background
+    // 1. Crisp Card Base (Off-white security substrate)
     ctx.fillStyle = "#ffffff";
     ctx.fillRect(0, 0, W, H);
 
-    // Outer subtle border
+    // Subtle micro-grid security watermark background
+    ctx.strokeStyle = "rgba(226, 232, 240, 0.45)";
+    ctx.lineWidth = 2;
+    for (let x = 60; x < W - 60; x += 60) {
+      ctx.beginPath();
+      ctx.moveTo(x, 60);
+      ctx.lineTo(x, H - 60);
+      ctx.stroke();
+    }
+    for (let y = 60; y < H - 60; y += 60) {
+      ctx.beginPath();
+      ctx.moveTo(60, y);
+      ctx.lineTo(W - 60, y);
+      ctx.stroke();
+    }
+
+    // Outer card edge hairline
     ctx.strokeStyle = "#cbd5e1";
-    ctx.lineWidth = 16;
-    ctx.strokeRect(20, 20, W - 40, H - 40);
+    ctx.lineWidth = 14;
+    ctx.strokeRect(30, 30, W - 60, H - 60);
 
-    // Top Header Banner (Blueprint blue accent)
-    ctx.fillStyle = "#0a0d12";
-    ctx.fillRect(40, 40, W - 80, 240);
-
-    // Header Title
-    ctx.fillStyle = "#ffffff";
-    ctx.font = "bold 64px 'JetBrains Mono', monospace";
-    ctx.fillText("DEV ACCESS // 2026", 90, 180);
-
-    // Online Status Indicator Dot
-    ctx.fillStyle = "#10b981";
+    // 2. Badge Clip Slot Cutout (Top center pill slot hole)
+    ctx.fillStyle = "#0f172a";
     ctx.beginPath();
-    ctx.arc(W - 140, 160, 24, 0, Math.PI * 2);
+    ctx.roundRect(W / 2 - 160, 60, 320, 70, 35);
     ctx.fill();
 
-    // Photo Box Section
-    const rx = 80;
-    const ry = 340;
-    const rw = W - 160;
-    const rh = 1840;
+    // 3. Top Security Header Bar
+    ctx.fillStyle = "#0a0d12";
+    ctx.beginPath();
+    ctx.roundRect(60, 170, W - 120, 240, 24);
+    ctx.fill();
 
-    // Photo Background
-    ctx.fillStyle = "#f1f5f9";
-    ctx.fillRect(rx, ry, rw, rh);
+    // Header Typography
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "bold 56px 'JetBrains Mono', monospace";
+    ctx.fillText("ENGINEERING IDENTITY // PASS", 110, 280);
+
+    // Status Indicator Badge
+    ctx.fillStyle = "#10b981";
+    ctx.beginPath();
+    ctx.arc(W - 240, 290, 20, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = "#6ee7b7";
+    ctx.font = "bold 38px 'JetBrains Mono', monospace";
+    ctx.fillText("ACTIVE", W - 200, 302);
+
+    // 4. Gold EMV Smart Chip (Realistic Credit/Security Chip)
+    const chipX = 110;
+    const chipY = 460;
+    const chipW = 280;
+    const chipH = 220;
+
+    // Gold base gradient
+    const chipGrad = ctx.createLinearGradient(chipX, chipY, chipX + chipW, chipY + chipH);
+    chipGrad.addColorStop(0, "#fbbf24");
+    chipGrad.addColorStop(0.5, "#d97706");
+    chipGrad.addColorStop(1, "#f59e0b");
+    ctx.fillStyle = chipGrad;
+    ctx.beginPath();
+    ctx.roundRect(chipX, chipY, chipW, chipH, 24);
+    ctx.fill();
+
+    // Smart chip inner etched circuit lines
+    ctx.strokeStyle = "#78350f";
+    ctx.lineWidth = 6;
+    ctx.strokeRect(chipX + 24, chipY + 24, chipW - 48, chipH - 48);
+    ctx.beginPath();
+    ctx.moveTo(chipX + chipW / 2, chipY + 24);
+    ctx.lineTo(chipX + chipW / 2, chipY + chipH - 24);
+    ctx.moveTo(chipX + 24, chipY + chipH / 2);
+    ctx.lineTo(chipX + chipW - 24, chipY + chipH / 2);
+    ctx.stroke();
+
+    // Chip ID Label
+    ctx.fillStyle = "#64748b";
+    ctx.font = "bold 36px 'JetBrains Mono', monospace";
+    ctx.fillText("RFID // NFC PASS", chipX + chipW + 40, chipY + 120);
+
+    ctx.fillStyle = "#0a0d12";
+    ctx.font = "bold 44px 'JetBrains Mono', monospace";
+    ctx.fillText("AUTH CODE: HV-9201-DEV", chipX + chipW + 40, chipY + 180);
+
+    // 5. Portrait Photo Section (Centered, Realistic Passport Frame)
+    const px = 110;
+    const py = 730;
+    const pw = W - 220;
+    const ph = 1380;
+
+    // Outer photo frame background
+    ctx.fillStyle = "#f8fafc";
+    ctx.fillRect(px, py, pw, ph);
 
     if (frontTex.image && frontImage) {
       const img = frontTex.image;
       ctx.save();
       ctx.beginPath();
-      ctx.roundRect(rx, ry, rw, rh, 32);
+      ctx.roundRect(px, py, pw, ph, 32);
       ctx.clip();
 
       const scale =
         imageFit === "contain"
-          ? Math.min(rw / img.width, rh / img.height)
-          : Math.max(rw / img.width, rh / img.height);
+          ? Math.min(pw / img.width, ph / img.height)
+          : Math.max(pw / img.width, ph / img.height);
       const dw = img.width * scale;
       const dh = img.height * scale;
-      const dx = rx + (rw - dw) / 2;
-      const dy = ry + (rh - dh) / 2;
+      const dx = px + (pw - dw) / 2;
+      const dy = py + (ph - dh) / 2;
 
       ctx.drawImage(img, dx, dy, dw, dh);
       ctx.restore();
 
-      // Border around photo
+      // Sharp industrial photo border
       ctx.strokeStyle = "#94a3b8";
       ctx.lineWidth = 10;
       ctx.beginPath();
-      ctx.roundRect(rx, ry, rw, rh, 32);
+      ctx.roundRect(px, py, pw, ph, 32);
       ctx.stroke();
     }
 
-    // Lower Details Section
+    // Photo Watermark Stamp
+    ctx.fillStyle = "rgba(255, 255, 255, 0.85)";
+    ctx.font = "bold 34px 'JetBrains Mono', monospace";
+    ctx.fillText("VERIFIED CANDIDATE // HARSHAL VARADE", px + 40, py + ph - 40);
+
+    // 6. Identity & Metadata Block
     ctx.fillStyle = "#0a0d12";
     ctx.font = "bold 96px 'JetBrains Mono', monospace";
-    ctx.fillText("HARSHAL VARADE", 90, 2340);
+    ctx.fillText("HARSHAL VARADE", 110, 2260);
 
     ctx.fillStyle = "#0284c7";
     ctx.font = "bold 56px 'JetBrains Mono', monospace";
-    ctx.fillText("FULL-STACK & CREATIVE TECHNOLOGIST", 90, 2430);
+    ctx.fillText("FULL-STACK SOFTWARE ENGINEER", 110, 2345);
 
-    // Divider Line
-    ctx.strokeStyle = "#e2e8f0";
+    // Hairline divider
+    ctx.strokeStyle = "#cbd5e1";
     ctx.lineWidth = 6;
     ctx.beginPath();
-    ctx.moveTo(90, 2480);
-    ctx.lineTo(W - 90, 2480);
+    ctx.moveTo(110, 2390);
+    ctx.lineTo(W - 110, 2390);
     ctx.stroke();
 
-    // Spec Badges
+    // Two-column metadata telemetry
     ctx.fillStyle = "#475569";
-    ctx.font = "bold 44px 'JetBrains Mono', monospace";
-    ctx.fillText("CORE: REACT • NEXT.JS • GSAP • AI", 90, 2570);
-    ctx.fillText("LOCATION: PUNE, IN  //  PASS-VERIFIED", 90, 2640);
+    ctx.font = "bold 40px 'JetBrains Mono', monospace";
+    ctx.fillText("SPEC: REACT • NEXT.JS • NODE • GSAP", 110, 2465);
+    ctx.fillText("LOCATION: PUNE, INDIA (18.52° N, 73.85° E)", 110, 2530);
+    ctx.fillText("CLEARANCE: FULL-STACK & SYSTEMS ARCHITECTURE", 110, 2595);
 
-    // Barcode at Bottom
+    // 7. Holographic Foil Security Strip
+    const holoGrad = ctx.createLinearGradient(110, 2640, W - 110, 2690);
+    holoGrad.addColorStop(0, "rgba(203, 213, 225, 0.7)");
+    holoGrad.addColorStop(0.25, "rgba(147, 197, 253, 0.7)");
+    holoGrad.addColorStop(0.5, "rgba(253, 230, 138, 0.7)");
+    holoGrad.addColorStop(0.75, "rgba(216, 180, 254, 0.7)");
+    holoGrad.addColorStop(1, "rgba(167, 243, 208, 0.7)");
+    ctx.fillStyle = holoGrad;
+    ctx.fillRect(110, 2640, W - 220, 45);
+
+    // 8. Authentic Scannable Barcode & Serial
     ctx.fillStyle = "#0a0d12";
-    for (let x = 90; x < W - 90; x += 22) {
-      const barWidth = (x % 5 === 0 || x % 3 === 0) ? 14 : 7;
-      ctx.fillRect(x, 2730, barWidth, 220);
+    for (let x = 110; x < W - 110; x += 18) {
+      const barWidth = (x % 5 === 0 || x % 7 === 0) ? 12 : 6;
+      ctx.fillRect(x, 2730, barWidth, 190);
     }
+
+    ctx.fillStyle = "#64748b";
+    ctx.font = "38px 'JetBrains Mono', monospace";
+    ctx.fillText("*HV - 0 7 9 4 - 5 0 3 2 - 2 0 2 6*", W / 2 - 340, 2980);
 
     const texture = new THREE.CanvasTexture(canvas);
     texture.colorSpace = THREE.SRGBColorSpace;
@@ -315,38 +399,62 @@ function Band({
     }
 
     if (fixed.current) {
+      const safeDelta = Math.min(Math.max(delta, 0), 0.05);
       [j1, j2].forEach((ref) => {
-        if (!ref.current.lerped)
-          ref.current.lerped = new THREE.Vector3().copy(
-            ref.current.translation()
-          );
-        const clampedDistance = Math.max(
-          0.1,
-          Math.min(1, ref.current.lerped.distanceTo(ref.current.translation()))
-        );
-        ref.current.lerped.lerp(
-          ref.current.translation(),
-          delta * (minSpeed + clampedDistance * (maxSpeed - minSpeed))
-        );
+        if (!ref.current) return;
+        const trans = ref.current.translation();
+        if (!trans || !Number.isFinite(trans.x) || !Number.isFinite(trans.y) || !Number.isFinite(trans.z)) {
+          return;
+        }
+
+        if (!ref.current.lerped || !Number.isFinite(ref.current.lerped.x)) {
+          ref.current.lerped = new THREE.Vector3().copy(trans);
+        }
+        const dist = ref.current.lerped.distanceTo(trans);
+        const clampedDistance = Math.max(0.1, Math.min(1, Number.isFinite(dist) ? dist : 0.5));
+        const alpha = Math.min(1, Math.max(0, safeDelta * (minSpeed + clampedDistance * (maxSpeed - minSpeed))));
+        ref.current.lerped.lerp(trans, alpha);
       });
 
-      curve.points[0].copy(j3.current.translation());
-      curve.points[1].copy(j2.current.lerped);
-      curve.points[2].copy(j1.current.lerped);
-      curve.points[3].copy(fixed.current.translation());
+      const p0 = j3.current?.translation();
+      const p1 = j2.current?.lerped;
+      const p2 = j1.current?.lerped;
+      const p3 = fixed.current?.translation();
 
-      if (band.current && band.current.geometry) {
-        band.current.geometry.setPoints(curve.getPoints(isMobile ? 16 : 32));
+      if (
+        p0 && Number.isFinite(p0.x) && Number.isFinite(p0.y) && Number.isFinite(p0.z) &&
+        p1 && Number.isFinite(p1.x) && Number.isFinite(p1.y) && Number.isFinite(p1.z) &&
+        p2 && Number.isFinite(p2.x) && Number.isFinite(p2.y) && Number.isFinite(p2.z) &&
+        p3 && Number.isFinite(p3.x) && Number.isFinite(p3.y) && Number.isFinite(p3.z)
+      ) {
+        curve.points[0].copy(p0);
+        curve.points[1].copy(p1);
+        curve.points[2].copy(p2);
+        curve.points[3].copy(p3);
+
+        if (band.current && band.current.geometry) {
+          const pts = curve.getPoints(isMobile ? 16 : 32);
+          const allFinite = pts.every(
+            (p) => Number.isFinite(p.x) && Number.isFinite(p.y) && Number.isFinite(p.z)
+          );
+          if (allFinite) {
+            band.current.geometry.setPoints(pts);
+          }
+        }
       }
 
       if (card.current) {
-        ang.copy(card.current.angvel());
-        rot.copy(card.current.rotation());
-        card.current.setAngvel({
-          x: ang.x,
-          y: ang.y - rot.y * 0.25,
-          z: ang.z,
-        });
+        const cardAng = card.current.angvel();
+        const cardRot = card.current.rotation();
+        if (cardAng && cardRot && Number.isFinite(cardAng.x) && Number.isFinite(cardRot.y)) {
+          ang.copy(cardAng);
+          rot.copy(cardRot);
+          card.current.setAngvel({
+            x: ang.x,
+            y: ang.y - rot.y * 0.25,
+            z: ang.z,
+          });
+        }
       }
     }
   });
@@ -394,52 +502,87 @@ function Band({
             }}
           >
             {/* Front Card Face */}
-            <mesh position={[0, 0, 0.021]} castShadow receiveShadow>
+            <mesh position={[0, 0, 0.022]} castShadow receiveShadow>
               <planeGeometry args={[1.5, 2.25]} />
               <meshStandardMaterial
                 map={frontCardMap}
-                roughness={0.35}
-                metalness={0.05}
+                roughness={0.25}
+                metalness={0.08}
               />
             </mesh>
 
             {/* Back Card Face */}
-            <mesh position={[0, 0, -0.021]} rotation={[0, Math.PI, 0]}>
+            <mesh position={[0, 0, -0.022]} rotation={[0, Math.PI, 0]}>
               <planeGeometry args={[1.5, 2.25]} />
               <meshStandardMaterial
                 map={backCardMap}
-                roughness={0.4}
-                metalness={0.1}
-              />
-            </mesh>
-
-            {/* Card Body Core / Rim (Light Slate Blueprint Edge) */}
-            <mesh>
-              <boxGeometry args={[1.52, 2.27, 0.04]} />
-              <meshStandardMaterial
-                color="#b7c8de"
                 roughness={0.3}
-                metalness={0.2}
+                metalness={0.12}
               />
             </mesh>
 
-            {/* Metallic Top Clamp Clip */}
-            <mesh position={[0, 1.2, 0]}>
-              <boxGeometry args={[0.55, 0.22, 0.09]} />
+            {/* Inner Card White Core */}
+            <mesh>
+              <boxGeometry args={[1.5, 2.25, 0.035]} />
               <meshStandardMaterial
-                color="#cbd5e1"
-                metalness={0.9}
-                roughness={0.2}
+                color="#ffffff"
+                roughness={0.4}
+                metalness={0.05}
               />
             </mesh>
 
-            {/* Metallic Eyelet Ring */}
-            <mesh position={[0, 1.35, 0]} rotation={[Math.PI / 2, 0, 0]}>
-              <torusGeometry args={[0.13, 0.04, 16, 32]} />
+            {/* Clear Protective Acrylic Badge Sleeve / Beveled Outer Rim */}
+            <mesh>
+              <boxGeometry args={[1.58, 2.33, 0.05]} />
+              <meshPhysicalMaterial
+                color="#ffffff"
+                transparent
+                opacity={0.35}
+                roughness={0.12}
+                metalness={0.1}
+                clearcoat={1}
+                clearcoatRoughness={0.08}
+                transmission={0.65}
+                ior={1.45}
+              />
+            </mesh>
+
+            {/* Top Badge Slot Punch-Hole Border */}
+            <mesh position={[0, 1.05, 0]}>
+              <boxGeometry args={[0.32, 0.08, 0.06]} />
               <meshStandardMaterial
-                color="#94a3b8"
+                color="#0f172a"
+                roughness={0.8}
+              />
+            </mesh>
+
+            {/* Heavy-Duty Chrome Top Clamp / Lanyard Clasp */}
+            <mesh position={[0, 1.18, 0]}>
+              <boxGeometry args={[0.42, 0.18, 0.09]} />
+              <meshStandardMaterial
+                color="#f1f5f9"
                 metalness={0.95}
-                roughness={0.15}
+                roughness={0.12}
+              />
+            </mesh>
+
+            {/* Chrome Rivet Pins on Clamp */}
+            <mesh position={[-0.14, 1.18, 0.05]}>
+              <cylinderGeometry args={[0.025, 0.025, 0.015, 16]} rotation={[Math.PI / 2, 0, 0]} />
+              <meshStandardMaterial color="#cbd5e1" metalness={0.95} roughness={0.1} />
+            </mesh>
+            <mesh position={[0.14, 1.18, 0.05]}>
+              <cylinderGeometry args={[0.025, 0.025, 0.015, 16]} rotation={[Math.PI / 2, 0, 0]} />
+              <meshStandardMaterial color="#cbd5e1" metalness={0.95} roughness={0.1} />
+            </mesh>
+
+            {/* Chrome Swivel Carabiner Loop */}
+            <mesh position={[0, 1.34, 0]} rotation={[Math.PI / 2, 0, 0]}>
+              <torusGeometry args={[0.12, 0.035, 16, 32]} />
+              <meshStandardMaterial
+                color="#f8fafc"
+                metalness={0.98}
+                roughness={0.1}
               />
             </mesh>
           </group>

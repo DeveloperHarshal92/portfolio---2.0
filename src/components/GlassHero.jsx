@@ -175,6 +175,7 @@ export default function GlassHero() {
 
   return (
     <section
+      id="home"
       ref={heroRef}
       className="relative isolate overflow-hidden min-w-80 min-h-dvh h-dvh bg-[#edf5ff] text-[#0a0d12]"
       style={{
@@ -244,7 +245,7 @@ export default function GlassHero() {
           </p>
           </TextReveal>
           <a
-            href="/project"
+            href="#project"
             className="inline-flex items-center justify-center min-h-[44px] px-[1.6rem] rounded-full bg-white text-[#0a0d12] text-[0.8rem] tracking-[0.04em] uppercase no-underline shadow-[0_1px_2px_rgba(10,13,18,0.08),0_8px_24px_rgba(10,13,18,0.06)] transition-[transform,box-shadow] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-px hover:shadow-[0_2px_4px_rgba(10,13,18,0.1),0_12px_28px_rgba(10,13,18,0.09)] focus-visible:-translate-y-px focus-visible:shadow-[0_2px_4px_rgba(10,13,18,0.1),0_12px_28px_rgba(10,13,18,0.09)] focus-visible:outline-none"
             style={{ fontFamily: "var(--font-mono)" }}
           >

@@ -2,8 +2,8 @@ import React, { useRef, useEffect } from "react";
 import CarouselCard from "./CarouselCard";
 import gsap from "@/libs/gsap";
 
-const CARD_W = 180;
-const CARD_H = 250;
+const CARD_W = 330;
+const CARD_H = 350;
 const SCALE = 1.35;
 const CARD_GAP = 25;
 
@@ -34,17 +34,17 @@ const InfiniteCarousel = ({ projects }) => {
 
   return (
     <div
-      style={{ padding: `${TRACK_H * 0.3}px 0 14px` }}
-      className="overflow-hidden"
+      style={{ padding: "90px 0 0 0" }}
+      className="w-full overflow-hidden flex justify-center items-center select-none"
     >
       <div
         ref={trackRef}
         style={{
-          gap: `${CARD_GAP}`,
+          gap: `${CARD_GAP}px`,
           width: "max-content",
           height: `${TRACK_H}px`,
         }}
-        className="track flex items-center gap-5"
+        className="track flex items-center"
       >
         {doubled.map((project, id) => {
           return (

@@ -14,18 +14,18 @@ const items = [
   },
   {
     number: "02",
-    label: "Work",
-    subtitle: "Selected Projects & Interactive Systems",
-    href: "/project",
-    ariaLabel: "Selected Projects",
-    stairOffset: 1,
-  },
-  {
-    number: "03",
     label: "About",
     subtitle: "Engineering Philosophy & Tech Ecosystem",
     href: "/about",
     ariaLabel: "About Harshal",
+    stairOffset: 1,
+  },
+  {
+    number: "03",
+    label: "Work",
+    subtitle: "Selected Projects & Interactive Systems",
+    href: "/project",
+    ariaLabel: "Selected Projects",
     stairOffset: 2,
   },
   {

@@ -13,15 +13,15 @@ export const projects = [
     longDescription:
       "Engineered from the ground up to handle high-frequency social interactions. The architecture features an asynchronous multimedia processing pipeline powered by Sharp and Fluent-FFmpeg that automatically transcodes uploaded videos and generates multi-resolution image sets for low-bandwidth mobile feeds. Built with end-to-end Socket.io bidirectional channels for instant direct messaging, live typing indicators, and presence detection, supported by an ephemeral 24-hour story lifecycle engine backed by MongoDB TTL indices and sub-millisecond Redis response caching.",
     coverImage:
-      "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1730528220487-80ed488ad546?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NjZ8fGluc3RhZ3JhbSUyMGNvdmVyJTIwaW1hZ2V8ZW58MHx8MHx8fDA%3D",
     heroImage:
-      "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?auto=format&fit=crop&w=1600&q=80",
+      "https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8aW5zdGFncmFtJTIwaGVyb2ltYWdlfGVufDB8fDB8fHww",
     gallery: [
-      "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1507499739999-097706ad8914?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1518640467707-6811f4a6ab73?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=1200&q=80"
+      "https://images.pexels.com/photos/6669782/pexels-photo-6669782.jpeg",
+      "https://images.pexels.com/photos/33137126/pexels-photo-33137126.jpeg",
+      "https://images.pexels.com/photos/12044783/pexels-photo-12044783.jpeg",
+      "https://images.pexels.com/photos/33464098/pexels-photo-33464098.png",
+      "https://images.pexels.com/photos/30945295/pexels-photo-30945295.jpeg"
     ],
     tags: ["React 19", "Socket.io", "Redis", "FFmpeg", "Node.js", "Express 5", "MongoDB"],
     featured: true,
@@ -53,7 +53,7 @@ export const projects = [
     id: 2,
     slug: "Audiom",
     number: "02",
-    title: "Audiom — Mood-Adaptive Music Streaming",
+    title: "Audiom - Mood-Adaptive Music Streaming",
     subtitle: "AI Facial Emotion Recognition Audio Player",
     category: "AI / Audio Streaming",
     year: "2025",
@@ -63,15 +63,15 @@ export const projects = [
     longDescription:
       "Audiom bridges computer vision and generative music recommendation. By running Google MediaPipe Face Landmarker models entirely in the client browser with WebGL acceleration, the player captures continuous micro-expressions without compromising user privacy. The detected emotional state (Happy, Energetic, Calm, Melancholic) immediately modulates playback queues and acoustic filters. Audio tracks stream with real-time waveform visualization, backed by automatic server-side ID3 tag extraction and Redis catalog acceleration.",
     coverImage:
-      "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80",
+      "https://images.pexels.com/photos/7054718/pexels-photo-7054718.jpeg",
     heroImage:
-      "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1600&q=80",
+      "https://images.pexels.com/photos/16247966/pexels-photo-16247966.jpeg",
     gallery: [
-      "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=1200&q=80"
+      "https://images.pexels.com/photos/4126704/pexels-photo-4126704.jpeg",
+      "https://images.pexels.com/photos/16759061/pexels-photo-16759061.jpeg",
+      "https://images.pexels.com/photos/15769242/pexels-photo-15769242.jpeg",
+      "https://images.pexels.com/photos/5809286/pexels-photo-5809286.jpeg",
+      "https://images.pexels.com/photos/7054757/pexels-photo-7054757.jpeg"
     ],
     tags: ["React 19", "MediaPipe Vision", "Tailwind CSS v4", "Web Audio API", "Node.js", "Redis"],
     featured: true,
@@ -101,9 +101,9 @@ export const projects = [
   },
   {
     id: 3,
-    slug: "Swiggy",
+    slug: "SwigInsta",
     number: "03",
-    title: "Swiggy / Zomato Food Discovery Platform",
+    title: "Swiggy Food Discovery Platform",
     subtitle: "Dual-Role Culinary Marketplace & Partner Studio",
     category: "Full Stack / E-Commerce",
     year: "2025",
@@ -113,15 +113,14 @@ export const projects = [
     longDescription:
       "Built with strict architectural separation between consumer browsing and food partner restaurant studios. Restaurant partners access authenticated management panels to configure menu categories, pricing, item availability, and direct ImageKit media uploads. Consumers experience an editorial discovery feed featuring live search filters, bookmarking collections, rating mechanisms, and an ergonomic mobile dock designed with native design tokens and CSS custom properties.",
     coverImage:
-      "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80",
+      "https://images.pexels.com/photos/3850213/pexels-photo-3850213.jpeg",
     heroImage:
-      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1600&q=80",
+      "https://images.pexels.com/photos/34366572/pexels-photo-34366572.jpeg",
     gallery: [
-      "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1482049016688-2d3e1b311543?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=1200&q=80"
+      "https://images.pexels.com/photos/27742642/pexels-photo-27742642.jpeg",
+      "https://images.pexels.com/photos/674574/pexels-photo-674574.jpeg",
+      "https://images.pexels.com/photos/8804992/pexels-photo-8804992.jpeg",
+      "https://images.pexels.com/photos/4542998/pexels-photo-4542998.jpeg",
     ],
     tags: ["React 19", "Marketplace", "ImageKit SDK", "RBAC", "Node.js", "Express 5", "MongoDB"],
     featured: false,
@@ -162,13 +161,13 @@ export const projects = [
     longDescription:
       "A full-stack implementation of an agentic conversational search engine. User queries trigger LangChain multi-step reasoning that performs query expansion, searches the live internet via Tavily Search API, and simultaneously performs semantic retrieval over Pinecone vector embeddings. The resulting sources are dynamically cited and grounded into structured answers streamed to the client using low-latency WebSocket token feeds styled in a scholar's parchment aesthetic.",
     coverImage:
-      "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80",
+      "https://images.pexels.com/photos/16094057/pexels-photo-16094057.jpeg",
     heroImage:
-      "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1600&q=80",
+      "https://cdn.britannica.com/12/264812-050-64185C43/Perplexity-AI-Logo-concept-photo-illustration.jpg",
     gallery: [
-      "https://images.unsplash.com/photo-1507499739999-097706ad8914?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=80",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSq63pSnl870NXn6b5HwAZDwAK6yX4PzjzOYiatW-H-Qw&s=10",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvrbBtHu2Df8edU8Ab2TTdsRJTVhRB2PYHXCuDOuo7Ag&s=10",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwumm0AFW-lyFJxjRfdgFArbe3UCsIe3QSei_B7BkiUA&s=10",
       "https://images.unsplash.com/photo-1504639725590-34d0984388bd?auto=format&fit=crop&w=1200&q=80",
       "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80"
     ],
@@ -202,7 +201,7 @@ export const projects = [
   },
   {
     id: 5,
-    slug: "Employee Management System",
+    slug: "EMS",
     number: "05",
     title: "EMS 3.0 — Enterprise Workspace & AI Copilot",
     subtitle: "Task Delegation & Intelligent Enterprise Operations",
@@ -214,9 +213,9 @@ export const projects = [
     longDescription:
       "EMS 3.0 unifies enterprise task management and AI automation in a single platform. Admins oversee team velocity, assign high-priority tasks, and monitor completion metrics, while employees manage interactive Kanban boards with real-time status transitions. An embedded LangChain AI copilot reviews upcoming deadlines, synthesizes task briefings, and alerts teams over Socket.io presence channels to keep distributed teams aligned.",
     coverImage:
-      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxPH-cAQtn04C66Y6wFX5kRUPeuFMahHVDjuAT9l7wiu2lyE1RL3CLh7cu&s=10",
     heroImage:
-      "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1600&q=80",
+      "https://images.pexels.com/photos/1181673/pexels-photo-1181673.jpeg",
     gallery: [
       "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=1200&q=80",
       "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80",
@@ -253,7 +252,7 @@ export const projects = [
     id: 6,
     slug: "AI Battle Arena",
     number: "06",
-    title: "AI Battle Arena — LLM Benchmark Arena",
+    title: "AI Battle Arena - LLM Benchmark Arena",
     subtitle: "Head-to-Head Frontier LLM Duel Engine",
     category: "AI / Benchmarking",
     year: "2025",
@@ -263,7 +262,7 @@ export const projects = [
     longDescription:
       "A benchmark platform inspired by competitive e-sports. Dispatches user coding and reasoning prompts simultaneously across Google Gemini, Mistral Large, and Cohere Command. As streaming responses complete, a stateful LangGraph multi-agent referee orchestrates rubric evaluation, comparing code complexity, safety, and conciseness to calculate weighted scores and reveal victor verdicts with dynamic GSAP meters.",
     coverImage:
-      "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRUAk08HPBjZVqpp7RMtdB_cK4aSp2_4fKA0HPmPf81NJ10twSlTpcFDg&s=10",
     heroImage:
       "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1600&q=80",
     gallery: [
@@ -304,7 +303,7 @@ export const projects = [
     id: 7,
     slug: "Luxrisen",
     number: "07",
-    title: "Luxurisen — Curated Luxury Fashion",
+    title: "Luxurisen - Curated Luxury Fashion",
     subtitle: "High-Performance Editorial Luxury E-Commerce",
     category: "Full Stack / Luxury E-Commerce",
     year: "2025",
@@ -353,9 +352,9 @@ export const projects = [
   },
   {
     id: 8,
-    slug: "Loveable",
+    slug: "Codespace",
     number: "08",
-    title: "CodeSpace — Cloud Microservices Web IDE",
+    title: "CodeSpace - Cloud Microservices Web IDE",
     subtitle: "Cloud-Native Kubernetes Microservices IDE",
     category: "Cloud Native / Developer Tools",
     year: "2025",
@@ -418,14 +417,14 @@ export const projects = [
     longDescription:
       "A modern career accelerator built with Next.js 16 App Router and React 19. Empowers candidates to compose ATS-compliant resumes with a multi-step structured wizard. Connected directly to Google Gemini AI models, the engine computes real-time keyword density and score radars, rewrites weak bullet points into quantifiable STAR-formatted impact statements, synthesizes executive career summaries, and provides real-time dual-pane PDF rendering.",
     coverImage:
-      "https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&w=800&q=80",
+      "https://images.pexels.com/photos/590044/pexels-photo-590044.jpeg",
     heroImage:
-      "https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=1600&q=80",
+      "https://images.pexels.com/photos/590016/pexels-photo-590016.jpeg",
     gallery: [
-      "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1200&q=80",
+      "https://images.pexels.com/photos/5439152/pexels-photo-5439152.jpeg",
+      "https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg",
+      "https://images.pexels.com/photos/270238/pexels-photo-270238.png",
+      "https://images.pexels.com/photos/5989941/pexels-photo-5989941.jpeg",
       "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=1200&q=80"
     ],
     tags: ["Next.js 16", "React 19", "Google Gemini AI", "TypeScript", "Tailwind CSS v4", "PDF Export"],
@@ -454,7 +453,7 @@ export const projects = [
   },
   {
     id: 10,
-    slug: "Smart Trolly 2.0",
+    slug: "Smart Trolly",
     number: "10",
     title: "Smart Trolly 2.0 — AI Autonomous Checkout",
     subtitle: "Edge Computer Vision & Real-Time FMCG Billing",

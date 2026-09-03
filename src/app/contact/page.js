@@ -10,13 +10,13 @@ import {
   Copy,
   Check,
   MapPin,
-  Clock,
+  Phone,
   ArrowUpRight,
-  Sparkles,
-  MessageSquare,
+  FileText,
+  Terminal,
 } from "lucide-react";
 
-// Inline Brand Icons
+// Inline Brand SVGs
 const Icons = {
   github: (
     <svg
@@ -52,15 +52,14 @@ const Icons = {
 const PROJECT_SCOPES = [
   "Full-Stack Web App",
   "Creative Motion UI",
-  "Freelance / Contract",
   "Full-Time Role",
-  "Other Inquiry",
+  "Contract / Architecture",
+  "General Inquiry",
 ];
 
-export default function ContactPage() {
+export function ContactSection() {
   const containerRef = useRef(null);
-  const leftColRef = useRef(null);
-  const rightColRef = useRef(null);
+  const contentRef = useRef(null);
 
   const [copied, setCopied] = useState(false);
   const [formState, setFormState] = useState({
@@ -72,7 +71,10 @@ export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const emailAddress = "developerever@gmail.com";
+  const emailAddress = "developer.ever@gmail.com";
+  const phoneNumber = "+91 9834681815";
+  const resumeUrl =
+    "https://docs.google.com/document/d/1bWZFFMI3BcylqzLrPf6MVyXw6qKXPpXuZm-Df56X2Q8/edit?usp=drive_link";
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(emailAddress);
@@ -86,229 +88,132 @@ export default function ContactPage() {
     setTimeout(() => {
       setLoading(false);
       setSubmitted(true);
-    }, 1000);
+    }, 900);
   };
 
-  // GSAP Entrance Animations
+  // Entrance animation for content
   useGSAP(
     () => {
+      if (!contentRef.current) return;
       gsap.fromTo(
-        leftColRef.current,
-        { opacity: 0, x: -40, scale: 0.98 },
+        contentRef.current.children,
+        { opacity: 0, y: 30 },
         {
           opacity: 1,
-          x: 0,
-          scale: 1,
-          duration: 1,
+          y: 0,
+          stagger: 0.12,
+          duration: 0.9,
           ease: "power3.out",
-          delay: 0.15,
-        },
-      );
-
-      gsap.fromTo(
-        rightColRef.current,
-        { opacity: 0, x: 40, scale: 0.98 },
-        {
-          opacity: 1,
-          x: 0,
-          scale: 1,
-          duration: 1,
-          ease: "power3.out",
-          delay: 0.25,
-        },
+          delay: 0.2,
+        }
       );
     },
-    { scope: containerRef },
+    { scope: containerRef }
   );
 
   return (
-    <main
+    <section
+      id="contact"
       ref={containerRef}
-      className="relative min-h-screen w-full bg-[#edf5ff] text-[#0a0d12] pt-[7rem] sm:pt-[8rem] pb-[5rem] px-4 sm:px-8 md:px-12 lg:px-16 overflow-hidden select-none"
+      className="relative min-h-screen w-full bg-[#edf5ff] text-[#0a0d12] py-20 lg:py-28 px-4 sm:px-8 md:px-12 lg:px-16 overflow-hidden select-none flex flex-col justify-center"
     >
-      <div className="relative max-w-7xl mx-auto flex flex-col gap-10 lg:gap-14">
-        {/* =========================================================================
-            HEADER TITLE
-            ========================================================================= */}
-        <section className="flex flex-col gap-4 max-w-3xl">
+
+      {/* =========================================================================
+          FOREGROUND CONTENT WRAPPER
+          ========================================================================= */}
+      <div
+        ref={contentRef}
+        className="relative z-10 max-w-7xl mx-auto w-full flex flex-col gap-12 lg:gap-16"
+      >
+        {/* =======================================================================
+            HEADER: INDUSTRIAL BRUTALIST TELEMETRY & HERO HEADLINE
+            ======================================================================= */}
+        <div className="flex flex-col gap-5 max-w-3xl">
+
           <TextReveal delay="0.1" splitBy="words">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-normal leading-[1.08] tracking-tight text-slate-950">
-              Let&apos;s build something <br />
-              <span className="font-serif italic font-light text-slate-800">
-                extraordinary.
-              </span>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-normal leading-[1.05] tracking-tight text-slate-950">
+              Let&apos;s architect what comes next.
             </h1>
           </TextReveal>
 
-          <TextReveal delay="0.25" splitBy="lines">
-            <p className="text-base sm:text-lg text-slate-600 font-normal leading-relaxed max-w-2xl">
-              Whether you need a high-performance web platform, interactive
-              motion interface, or want to discuss full-stack engineering
-              opportunities — my inbox is always open.
-            </p>
-          </TextReveal>
-        </section>
+          <p className="text-base sm:text-lg text-slate-600 font-normal leading-relaxed max-w-2xl">
+            Open for full-stack engineering roles, technical architecture contracts,
+            and creative frontend collaborations. Drop a direct transmission or connect
+            via the channels below.
+          </p>
+        </div>
 
-        {/* =========================================================================
-            2-COLUMN REDESIGN: LEFT PORTRAIT & DETAILS | RIGHT CONTACT TERMINAL
-            ========================================================================= */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
+        {/* =======================================================================
+            SWITCHED DUAL-PANEL LAYOUT:
+            LEFT (7 COLS): INTERACTIVE DISPATCH TERMINAL
+            RIGHT (5 COLS): DIRECT CHANNELS & RESUME STATION
+            ======================================================================= */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
           {/* =====================================================================
-              LEFT COLUMN: EDITORIAL PORTRAIT & PROFILE HUB (5 COLS)
+              LEFT PANEL: DISPATCH CONSOLE (7 COLS)
               ===================================================================== */}
-          <div
-            ref={leftColRef}
-            className="lg:col-span-5 flex flex-col gap-5 h-full"
-          >
-            {/* Portrait Card */}
-            <div className="relative group rounded-3xl overflow-hidden bg-slate-950 border border-slate-800 shadow-2xl flex flex-col min-h-[460px] sm:min-h-[520px] lg:min-h-[560px]">
-              <Image
-                src="/images/harshal-contact.jpg"
-                alt="Harshal Varade"
-                fill
-                priority
-                className="object-cover object-top filter grayscale contrast-110 group-hover:scale-[1.02] transition-transform duration-700 ease-out"
-                sizes="(max-width: 1024px) 100vw, 40vw"
-              />
-
-              {/* Gradient Scrim */}
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
-              {/* Bottom Card Content */}
-              <div className="relative z-10 mt-auto p-6 sm:p-8 flex flex-col gap-4 text-white">
-                <div>
-                  <h2 className="text-2xl sm:text-3xl font-medium tracking-tight text-white">
-                    Harshal Varade
-                  </h2>
-                  <p className="text-sm font-mono text-slate-300 mt-1">
-                    Full-Stack Developer
-                  </p>
-                </div>
-
-                <div className="flex items-center gap-4 text-xs font-mono text-slate-400 border-t border-white/10 pt-4">
-                  <div className="flex items-center gap-1.5">
-                    <MapPin className="w-3.5 h-3.5 text-slate-300" />
-                    <span>Pune, Maharashtra, India</span>
+          <div className="lg:col-span-7 flex flex-col">
+            {/* Double-Bezel Shell */}
+            <div className="p-2 sm:p-2.5 rounded-[2rem] bg-black/5 ring-1 ring-black/5 border border-white/40 shadow-xl backdrop-blur-2xl">
+              <div className="p-6 sm:p-9 rounded-[calc(2rem-0.625rem)] bg-white/85 border border-[#b7c8de]/70 shadow-sm flex flex-col gap-6">
+                <div className="flex items-center justify-between border-b border-[#b7c8de]/60 pb-4">
+                  <div className="flex items-center gap-2">
+                    <Terminal className="w-4 h-4 text-slate-700" />
+                    <span className="text-xs font-mono uppercase tracking-widest text-slate-800">
+                      Transmission Terminal
+                    </span>
                   </div>
+                  <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">
+                    P2P Secure Channel
+                  </span>
                 </div>
-              </div>
-            </div>
 
-            {/* Quick Links & Email Strip */}
-            <div className="p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
-              <div className="flex items-center gap-10 w-full sm:w-auto">
-                <a
-                  href="https://github.com/DeveloperHarshal92"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-2xl bg-slate-100/90 hover:bg-slate-200/90 text-slate-800 text-xs font-mono transition-all group"
-                >
-                  {Icons.github}
-                  <span>GitHub</span>
-                  <ArrowUpRight className="w-3 h-3 text-slate-400 group-hover:text-slate-900 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                </a>
-
-                <a
-                  href="https://www.linkedin.com/in/harshal-varade-07945a3a3"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-2xl bg-sky-50/80 hover:bg-sky-100 text-sky-800 text-xs font-mono transition-all group"
-                >
-                  {Icons.linkedin}
-                  <span>LinkedIn</span>
-                  <ArrowUpRight className="w-3 h-3 text-sky-400 group-hover:text-sky-800 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                </a>
-              </div>
-              <button
-                onClick={handleCopyEmail}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-2xl bg-slate-950 text-white hover:bg-slate-800 text-xs font-mono transition-all cursor-pointer shadow-sm"
-              >
-                {copied ? (
-                  <>
-                    <Check className="w-3.5 h-3.5 text-emerald-400" />
-                    <span className="text-emerald-300">Copied!</span>
-                  </>
-                ) : (
-                  <>
-                    <Copy className="w-3.5 h-3.5" />
-                    <span>Copy Email</span>
-                  </>
-                )}
-              </button>
-            </div>
-          </div>
-
-          {/* =====================================================================
-              RIGHT COLUMN: INTERACTIVE DISPATCH TERMINAL (7 COLS)
-              ===================================================================== */}
-          <div ref={rightColRef} className="lg:col-span-7 flex flex-col h-full">
-            <div className="h-full p-6 sm:p-10 rounded-3xl bg-white/90 border border-[#b7c8de]/80 shadow-xl shadow-slate-300/40 backdrop-blur-xl flex flex-col justify-between">
-              {submitted ? (
-                <div className="py-20 flex flex-col items-center justify-center text-center gap-4 animate-in fade-in zoom-in duration-500">
-                  <div className="w-16 h-16 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-600 shadow-sm">
-                    <Check className="w-8 h-8" />
-                  </div>
-                  <h3 className="text-2xl sm:text-3xl font-medium text-slate-950">
-                    Dispatch Transmitted
-                  </h3>
-                  <p className="text-sm text-slate-600 max-w-md leading-relaxed">
-                    Thank you for reaching out, {formState.name || "friend"}.
-                    Your message has been received and I will follow up
-                    promptly.
-                  </p>
-                  <button
-                    onClick={() => {
-                      setSubmitted(false);
-                      setFormState({
-                        name: "",
-                        email: "",
-                        scope: "Full-Stack Web App",
-                        message: "",
-                      });
-                    }}
-                    className="mt-4 px-6 py-3 rounded-full bg-slate-950 text-white font-mono text-xs uppercase tracking-wider hover:bg-slate-800 transition-colors cursor-pointer"
-                  >
-                    Send Another Message
-                  </button>
-                </div>
-              ) : (
-                <form
-                  onSubmit={handleSubmit}
-                  className="flex flex-col gap-6 h-full justify-between"
-                >
-                  <div className="flex flex-col gap-6">
-                    {/* Header line */}
-                    <div className="flex items-center justify-between border-b border-slate-200/80 pb-4">
-                      <div className="flex items-center gap-2">
-                        <MessageSquare className="w-4 h-4 text-sky-600" />
-                        <span className="text-xs font-mono uppercase tracking-wider text-slate-700">
-                          Direct Communication
-                        </span>
-                      </div>
-                      <a
-                        href={`mailto:${emailAddress}`}
-                        className="text-xs font-mono text-slate-500 hover:text-sky-600 transition-colors"
-                      >
-                        {emailAddress}
-                      </a>
+                {submitted ? (
+                  <div className="py-16 flex flex-col items-center justify-center text-center gap-4 animate-in fade-in zoom-in duration-500">
+                    <div className="w-14 h-14 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-600 shadow-sm">
+                      <Check className="w-7 h-7" />
                     </div>
-
-                    {/* Scope Selector Pills */}
-                    <div className="flex flex-col gap-2.5">
-                      <label className="text-xs font-mono uppercase tracking-wider text-slate-600">
-                        Project Scope / Inquiry
+                    <h3 className="text-2xl font-medium text-slate-950">
+                      Transmission Received
+                    </h3>
+                    <p className="text-sm text-slate-600 max-w-md leading-relaxed">
+                      Thank you, {formState.name || "friend"}. Your dispatch has been logged
+                      and I will follow up promptly.
+                    </p>
+                    <button
+                      onClick={() => {
+                        setSubmitted(false);
+                        setFormState({
+                          name: "",
+                          email: "",
+                          scope: "Full-Stack Web App",
+                          message: "",
+                        });
+                      }}
+                      className="mt-4 px-6 py-2.5 rounded-full bg-slate-950 text-white font-mono text-xs uppercase tracking-wider hover:bg-slate-800 transition-colors"
+                    >
+                      Send Another Dispatch
+                    </button>
+                  </div>
+                ) : (
+                  <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+                    {/* Scope Selector */}
+                    <div className="flex flex-col gap-2">
+                      <label className="text-xs font-mono text-slate-600 uppercase tracking-wider">
+                        Engagement Scope
                       </label>
                       <div className="flex flex-wrap gap-2">
                         {PROJECT_SCOPES.map((scope) => (
                           <button
-                            type="button"
                             key={scope}
+                            type="button"
                             onClick={() =>
-                              setFormState({ ...formState, scope })
+                              setFormState((prev) => ({ ...prev, scope }))
                             }
-                            className={`px-3.5 py-1.5 rounded-full text-xs font-mono transition-all cursor-pointer ${
+                            className={`px-3.5 py-1.5 rounded-full text-xs font-mono transition-all duration-200 cursor-pointer ${
                               formState.scope === scope
                                 ? "bg-slate-950 text-white shadow-sm"
-                                : "bg-slate-100 hover:bg-slate-200/80 text-slate-700 border border-slate-200/50"
+                                : "bg-slate-100/90 text-slate-700 hover:bg-slate-200/80"
                             }`}
                           >
                             {scope}
@@ -317,88 +222,199 @@ export default function ContactPage() {
                       </div>
                     </div>
 
-                    {/* Inputs Grid */}
+                    {/* Inputs Row */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="flex flex-col gap-1.5">
-                        <label className="text-xs font-mono uppercase tracking-wider text-slate-600">
-                          Your Name *
+                        <label className="text-xs font-mono text-slate-600 uppercase tracking-wider">
+                          Name *
                         </label>
                         <input
                           type="text"
                           required
-                          placeholder="e.g. Alex Morgan"
                           value={formState.name}
                           onChange={(e) =>
                             setFormState({ ...formState, name: e.target.value })
                           }
-                          className="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-[#b7c8de]/70 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500/30 focus:border-sky-500 transition-all placeholder:text-slate-400"
+                          placeholder="Your Name"
+                          className="w-full px-4 py-3 rounded-xl bg-white/90 border border-[#b7c8de] text-slate-950 text-sm font-mono placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-950 transition-all"
                         />
                       </div>
 
                       <div className="flex flex-col gap-1.5">
-                        <label className="text-xs font-mono uppercase tracking-wider text-slate-600">
-                          Email Address *
+                        <label className="text-xs font-mono text-slate-600 uppercase tracking-wider">
+                          Email *
                         </label>
                         <input
                           type="email"
                           required
-                          placeholder="alex@domain.com"
                           value={formState.email}
                           onChange={(e) =>
-                            setFormState({
-                              ...formState,
-                              email: e.target.value,
-                            })
+                            setFormState({ ...formState, email: e.target.value })
                           }
-                          className="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-[#b7c8de]/70 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500/30 focus:border-sky-500 transition-all placeholder:text-slate-400"
+                          placeholder="your.email@domain.com"
+                          className="w-full px-4 py-3 rounded-xl bg-white/90 border border-[#b7c8de] text-slate-950 text-sm font-mono placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-950 transition-all"
                         />
                       </div>
                     </div>
 
-                    {/* Message Textarea */}
+                    {/* Message Box */}
                     <div className="flex flex-col gap-1.5">
-                      <label className="text-xs font-mono uppercase tracking-wider text-slate-600">
-                        Message / Details *
+                      <label className="text-xs font-mono text-slate-600 uppercase tracking-wider">
+                        Transmission Brief *
                       </label>
                       <textarea
                         required
-                        rows={6}
-                        placeholder="Tell me about your project, timeline, deliverables, or team..."
+                        rows={4}
                         value={formState.message}
                         onChange={(e) =>
-                          setFormState({
-                            ...formState,
-                            message: e.target.value,
-                          })
+                          setFormState({ ...formState, message: e.target.value })
                         }
-                        className="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-[#b7c8de]/70 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500/30 focus:border-sky-500 transition-all placeholder:text-slate-400 resize-none"
+                        placeholder="Project overview, engineering requirements, or inquiry..."
+                        className="w-full px-4 py-3 rounded-xl bg-white/90 border border-[#b7c8de] text-slate-950 text-sm font-mono placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-950 transition-all resize-none"
                       />
                     </div>
-                  </div>
 
-                  {/* Submit Button */}
-                  <div className="pt-2">
+                    {/* Button-in-Button CTA */}
+                    <div className="pt-2 flex justify-start">
+                      <button
+                        type="submit"
+                        disabled={loading}
+                        className="inline-flex items-center gap-4 pl-7 pr-3 py-2.5 rounded-full bg-slate-950 text-white font-mono text-xs uppercase tracking-wider shadow-lg hover:bg-slate-800 active:scale-[0.98] transition-all duration-300 group cursor-pointer disabled:opacity-50"
+                      >
+                        <span>{loading ? "Transmitting..." : "Transmit Dispatch"}</span>
+                        <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center group-hover:translate-x-1 transition-transform">
+                          <Send className="w-3.5 h-3.5 text-white" />
+                        </div>
+                      </button>
+                    </div>
+                  </form>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* =====================================================================
+              RIGHT PANEL: DIRECT CHANNELS & RESUME (5 COLS)
+              ===================================================================== */}
+          <div className="lg:col-span-5 flex flex-col gap-5">
+            {/* Direct Connect Hub Card */}
+            <div className="p-2 sm:p-2.5 rounded-[2rem] bg-black/5 ring-1 ring-black/5 border border-white/40 shadow-xl backdrop-blur-2xl">
+              <div className="p-6 sm:p-8 rounded-[calc(2rem-0.625rem)] bg-white/85 border border-[#b7c8de]/70 shadow-sm flex flex-col gap-6">
+                <div>
+                  <span className="text-[11px] font-mono text-slate-500 uppercase tracking-widest">
+                    Direct Wire
+                  </span>
+                  <h3 className="text-xl font-medium text-slate-950 mt-1">
+                    Direct Channels
+                  </h3>
+                </div>
+
+                <div className="flex flex-col gap-4 font-mono text-xs">
+                  {/* Email Channel */}
+                  <div className="flex items-center justify-between p-3.5 rounded-xl bg-slate-50/90 border border-slate-200/80">
+                    <div className="flex items-center gap-3">
+                      <Mail className="w-4 h-4 text-slate-600" />
+                      <a
+                        href={`mailto:${emailAddress}`}
+                        className="text-slate-900 hover:underline"
+                      >
+                        {emailAddress}
+                      </a>
+                    </div>
                     <button
-                      type="submit"
-                      disabled={loading}
-                      className="w-full inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-2xl bg-slate-950 text-white font-mono text-xs uppercase tracking-widest shadow-lg hover:bg-sky-600 transition-all duration-300 hover:-translate-y-0.5 disabled:opacity-70 disabled:hover:translate-y-0 cursor-pointer"
+                      onClick={handleCopyEmail}
+                      title="Copy Email"
+                      className="p-1.5 rounded-lg hover:bg-slate-200/70 text-slate-600 hover:text-slate-900 transition-colors"
                     >
-                      {loading ? (
-                        <span className="animate-pulse">Transmitting...</span>
+                      {copied ? (
+                        <Check className="w-3.5 h-3.5 text-emerald-600" />
                       ) : (
-                        <>
-                          <span>Send Transmission</span>
-                          <Send className="w-4 h-4" />
-                        </>
+                        <Copy className="w-3.5 h-3.5" />
                       )}
                     </button>
                   </div>
-                </form>
-              )}
+
+                  {/* Phone Channel */}
+                  <div className="flex items-center justify-between p-3.5 rounded-xl bg-slate-50/90 border border-slate-200/80">
+                    <div className="flex items-center gap-3">
+                      <Phone className="w-4 h-4 text-slate-600" />
+                      <a
+                        href={`tel:${phoneNumber.replace(/\s+/g, "")}`}
+                        className="text-slate-900 hover:underline"
+                      >
+                        {phoneNumber}
+                      </a>
+                    </div>
+                  </div>
+
+                  {/* Location Coordinate */}
+                  <div className="flex items-center gap-3 p-3.5 rounded-xl bg-slate-50/90 border border-slate-200/80 text-slate-700">
+                    <MapPin className="w-4 h-4 text-slate-600" />
+                    <span>Pune, Maharashtra, India</span>
+                  </div>
+                </div>
+
+                {/* Social & Resume Links */}
+                <div className="pt-2 border-t border-[#b7c8de]/60 flex flex-col gap-3">
+                  <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">
+                    External Repositories & Credentials
+                  </span>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <a
+                      href="https://github.com/DeveloperHarshal92"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-between p-3 rounded-xl bg-white border border-[#b7c8de]/70 text-slate-900 text-xs font-mono hover:bg-slate-50 transition-all group shadow-sm"
+                    >
+                      <div className="flex items-center gap-2">
+                        {Icons.github}
+                        <span>GitHub</span>
+                      </div>
+                      <ArrowUpRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-slate-950 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    </a>
+
+                    <a
+                      href="https://www.linkedin.com/in/harshal-varade-07945a3a3"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-between p-3 rounded-xl bg-white border border-[#b7c8de]/70 text-slate-900 text-xs font-mono hover:bg-slate-50 transition-all group shadow-sm"
+                    >
+                      <div className="flex items-center gap-2">
+                        {Icons.linkedin}
+                        <span>LinkedIn</span>
+                      </div>
+                      <ArrowUpRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-slate-950 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    </a>
+                  </div>
+
+                  {/* Verified CV Button */}
+                  <a
+                    href={resumeUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-between p-3.5 rounded-xl bg-slate-950 text-white text-xs font-mono hover:bg-slate-800 transition-all group shadow-md"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <FileText className="w-4 h-4 text-amber-300" />
+                      <span>Verified Curriculum Vitae</span>
+                    </div>
+                    <ArrowUpRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
+    </section>
+  );
+}
+
+export default function ContactPage() {
+  return (
+    <main className="relative min-h-screen w-full bg-[#edf5ff]">
+      <ContactSection />
     </main>
   );
 }

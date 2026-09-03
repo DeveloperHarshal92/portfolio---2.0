@@ -55,6 +55,21 @@ const useViewTransition = () => {
 
   const navigateTo = useCallback(
     (href) => {
+      // If anchor link on the same page, scroll smoothly instead of full page wipe
+      if (href.startsWith("#") || (typeof window !== "undefined" && window.location.pathname === "/" && href.startsWith("/#"))) {
+        const targetId = href.replace(/^\/?#/, "");
+        if (targetId) {
+          const targetEl = document.getElementById(targetId);
+          if (targetEl) {
+            targetEl.scrollIntoView({ behavior: "smooth" });
+            return;
+          }
+        } else {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+          return;
+        }
+      }
+
       const overlay = createStrips();
       const strips = Array.from(overlay.children);
 

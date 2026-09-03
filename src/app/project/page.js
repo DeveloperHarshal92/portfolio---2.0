@@ -1,18 +1,24 @@
-"use client"
-import InfiniteCarousel from '@/components/InfiniteCarousel'
-import TextReveal from '@/components/TextReveal'
-import {projects}  from '@/data/projects'
-const page = () => {
+"use client";
+
+import React from "react";
+import CoverflowCarousel from "@/components/CoverflowCarousel";
+import { projects } from "@/data/projects";
+
+export function ProjectSection() {
   return (
-    <div className='w-full h-screen flex flex-col items-center justify-center overflow-hidden'>
-        <TextReveal delay="0.1">
-            <h1 className='mb-0 md:mb-5 text-[5vw] lg:text-[6.5vw] font-normal leading-[1.08] tracking-tight text-slate-950' style={{fontFamily:"var(--font-mono)"}}>
-                Selected Work
-            </h1>
-        </TextReveal>
-        <InfiniteCarousel projects={projects}/>
-    </div>
-  )
+    <section
+      id="project"
+      className="relative w-full bg-[#edf5ff] text-[#0a0d12] select-none"
+    >
+      <CoverflowCarousel projects={projects} />
+    </section>
+  );
 }
 
-export default page
+export default function ProjectPage() {
+  return (
+    <main className="w-full min-h-screen bg-[#edf5ff]">
+      <ProjectSection />
+    </main>
+  );
+}
