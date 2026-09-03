@@ -46,10 +46,10 @@ const InfiniteCarousel = ({ projects }) => {
         }}
         className="track flex items-center"
       >
-        {doubled.map((project, id) => {
+        {doubled.map((project, index) => {
           return (
             <CarouselCard
-              key={id}
+              key={`infinite-card-${project.id ?? project.slug ?? index}-${index}`}
               project={project}
               onHoverStart={() => tweenRef.current?.pause()}
               onHoverEnd={() => tweenRef.current?.play()}

@@ -18,25 +18,31 @@ const CarouselCard = ({ project, onHoverStart, onHoverEnd }) => {
   const onEnter = () => {
     onHoverStart?.();
 
-    gsap.to(cardRef.current, {
-      width: CARD_W * SCALE,
-      height: CARD_H * SCALE,
-      duration: 0.3,
-      ease: "power3.out",
-    });
+    if (cardRef.current) {
+      gsap.to(cardRef.current, {
+        width: CARD_W * SCALE,
+        height: CARD_H * SCALE,
+        duration: 0.3,
+        ease: "power3.out",
+      });
+    }
 
-    gsap.to(imgRef.current, {
-      scale: 1.2,
-      duration: 0.3,
-      ease: "power3.out",
-    });
+    if (imgRef.current) {
+      gsap.to(imgRef.current, {
+        scale: 1.2,
+        duration: 0.3,
+        ease: "power3.out",
+      });
+    }
 
-    gsap.to(titlePanelRef.current, {
-      opacity: 1,
-      y: 0,
-      duration: 0.3,
-      ease: "power3.out",
-    });
+    if (titlePanelRef.current) {
+      gsap.to(titlePanelRef.current, {
+        opacity: 1,
+        y: 0,
+        duration: 0.3,
+        ease: "power3.out",
+      });
+    }
 
     numRef.current?.play();
     titleRef.current?.play();
@@ -45,25 +51,31 @@ const CarouselCard = ({ project, onHoverStart, onHoverEnd }) => {
   const onLeave = () => {
     onHoverEnd?.();
 
-    gsap.to(cardRef.current, {
-      width: CARD_W,
-      height: CARD_H,
-      duration: 0.3,
-      ease: "power3.out",
-    });
+    if (cardRef.current) {
+      gsap.to(cardRef.current, {
+        width: CARD_W,
+        height: CARD_H,
+        duration: 0.3,
+        ease: "power3.out",
+      });
+    }
 
-    gsap.to(imgRef.current, {
-      scale: 1.6,
-      duration: 0.3,
-      ease: "power3.out",
-    });
+    if (imgRef.current) {
+      gsap.to(imgRef.current, {
+        scale: 1.6,
+        duration: 0.3,
+        ease: "power3.out",
+      });
+    }
 
-    gsap.to(titlePanelRef.current, {
-      opacity: 0,
-      y: 6,
-      duration: 0.25,
-      ease: "power3.out",
-    });
+    if (titlePanelRef.current) {
+      gsap.to(titlePanelRef.current, {
+        opacity: 0,
+        y: 6,
+        duration: 0.25,
+        ease: "power3.out",
+      });
+    }
 
     numRef.current?.reverse();
     titleRef.current?.reverse();

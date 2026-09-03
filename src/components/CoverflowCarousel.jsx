@@ -209,7 +209,6 @@ export function CoverflowCarousel({
       };
     },
     {
-      scope: wrapperRef,
       dependencies: [count, paint],
     },
   );
@@ -287,20 +286,10 @@ export function CoverflowCarousel({
               key={currentProject.slug || displayIndex}
               className="flex flex-col items-center text-center gap-1"
             >
-              {/* <TextReveal
-                key={`num-${currentProject.number || displayIndex}`}
-                splitBy="chars"
-                duration={0.3}
-              >
-                <span className="text-xs sm:text-sm font-mono font-semibold uppercase tracking-[0.3em] text-slate-500 group-hover:text-slate-900 transition-colors">
-                  [ {currentProject.number} ]
-                </span>
-              </TextReveal> */}
-
               <TextReveal
                 key={`slug-${currentProject.slug || displayIndex}`}
-                splitBy="chars"
-                duration={0.4}
+                splitBy="words"
+                duration={0.5}
               >
                 <h2 className="text-3xl sm:text-4xl lg:text-5xl font-normal leading-tight tracking-tight text-slate-950 uppercase font-mono group-hover:text-sky-600 transition-colors">
                   {currentProject.slug}

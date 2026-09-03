@@ -31,12 +31,15 @@ const TextReveal = forwardRef(
 
     useGSAP(
       () => {
+        if (!wrapperRef.current) return;
+
         splitRef.current = new SplitText(wrapperRef.current, {
           type: splitBy,
           lineThreshold: 0.3,
         });
 
-        const elements = splitRef.current[splitBy];
+        const elements = splitRef.current?.[splitBy];
+        if (!elements || elements.length === 0) return;
 
         gsap.set(elements, {
           yPercent: 110,
@@ -77,7 +80,6 @@ const TextReveal = forwardRef(
         };
       },
       {
-        scope: wrapperRef,
         dependencies: [splitBy, trigger, stagger, duration],
       },
     );

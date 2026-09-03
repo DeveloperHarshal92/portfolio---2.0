@@ -22,6 +22,21 @@ try {
   // safe if already extended
 }
 
+if (typeof window !== "undefined") {
+  const origWarn = console.warn;
+  console.warn = (...args) => {
+    if (
+      typeof args[0] === "string" &&
+      (args[0].includes("THREE.Clock: This module has been deprecated") ||
+       args[0].includes("using deprecated parameters for the initialization function") ||
+       args[0].includes("Invalid scope"))
+    ) {
+      return;
+    }
+    origWarn.apply(console, args);
+  };
+}
+
 const BLANK_PIXEL =
   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==";
 

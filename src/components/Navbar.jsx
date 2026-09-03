@@ -22,7 +22,7 @@ const items = [
   },
   {
     number: "03",
-    label: "Work",
+    label: "Projects",
     subtitle: "Selected Projects & Interactive Systems",
     href: "/project",
     ariaLabel: "Selected Projects",

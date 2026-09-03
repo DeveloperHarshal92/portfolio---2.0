@@ -12,8 +12,8 @@ const DEFAULT_ITEMS = [
     subtitle: "Main Canvas",
     href: "/",
     ariaLabel: "Home",
-    widthDesktop: "35vw",
-    widthMobile: "70vw",
+    widthDesktop: "70vw",
+    widthMobile: "85vw",
   },
   {
     number: "02",
@@ -21,8 +21,8 @@ const DEFAULT_ITEMS = [
     subtitle: "Projects & Systems",
     href: "/project",
     ariaLabel: "Selected Projects",
-    widthDesktop: "41vw",
-    widthMobile: "80vw",
+    widthDesktop: "76vw",
+    widthMobile: "90vw",
   },
   {
     number: "03",
@@ -30,8 +30,8 @@ const DEFAULT_ITEMS = [
     subtitle: "Bio & Tech Stack",
     href: "/about",
     ariaLabel: "About Harshal",
-    widthDesktop: "48vw",
-    widthMobile: "90vw",
+    widthDesktop: "82vw",
+    widthMobile: "95vw",
   },
   {
     number: "04",
@@ -39,7 +39,7 @@ const DEFAULT_ITEMS = [
     subtitle: "Direct Channel",
     href: "/contact",
     ariaLabel: "Direct Contact",
-    widthDesktop: "55vw",
+    widthDesktop: "88vw",
     widthMobile: "100vw",
   },
 ];
@@ -247,11 +247,11 @@ export default function BubbleMenu({
           {/* Right-aligned Flush Strips Container (Zero gap) */}
           <div className="relative z-10 w-full flex flex-col items-end gap-0 py-0 pr-0">
             {menuItems.map((item, idx) => {
-              // Progressively larger width reaching 55vw
+              // Progressively larger width covering at least 70% of the screen
               const stripWidth =
                 typeof window !== "undefined" && window.innerWidth >= 768
-                  ? item.widthDesktop || `${35 + idx * 6}vw`
-                  : item.widthMobile || `${70 + idx * 10}vw`;
+                  ? item.widthDesktop || `${70 + idx * 6}vw`
+                  : item.widthMobile || `${85 + idx * 4}vw`;
 
               return (
                 <div
@@ -261,6 +261,7 @@ export default function BubbleMenu({
                   }}
                   style={{
                     width: stripWidth,
+                    minWidth: "70vw",
                     maxWidth: "100%",
                   }}
                   className="flex justify-end"

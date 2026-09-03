@@ -6,8 +6,10 @@ import TextReveal from "@/components/TextReveal";
 import { ArrowUpRight } from "lucide-react";
 import Lanyard from "@/components/Lanyard";
 import SkillsSpiral from "@/components/SkillsSpiral";
+import useViewTransition from "@/hooks/useViewTransition";
 
 export function AboutSection({ showCta = false }) {
+  const { navigateTo } = useViewTransition();
   const containerRef = useRef(null);
   const paragraphsRef = useRef(null);
 
@@ -47,11 +49,11 @@ export function AboutSection({ showCta = false }) {
               className="flex flex-col gap-5 text-slate-700 leading-relaxed text-base md:text-[1.05rem]"
             >
               <p>
-                I am <strong>Harshal Varade</strong>, a{" "}
-                <strong>full-stack engineer</strong> based in Pune, India,
+                I'm <strong>Harshal Varade</strong>, a{" "}
+                <strong>Full-Stack Engineer</strong> based in Pune, India,
                 holding a{" "}
                 <strong>
-                  Bachelor of Engineering in Electronics and Telecommunication
+                  Bachelor of Engineering in Electronics and Telecommunication{" "}
                 </strong>
                 from Sinhgad College of Engineering (CGPA 7.82). My engineering
                 practice is anchored in building scalable, production-grade
@@ -85,10 +87,10 @@ export function AboutSection({ showCta = false }) {
 
               <p>
                 With hands-on software development experience from engineering
-                internships at Mass IT Solutions and Cognifyz Technologies, I
+                internships at <strong>Mass IT Solutions</strong> and <strong>Cognifyz Technologies</strong>, I
                 bridge backend robustness with high-performance frontend craft.
-                Utilizing React 19, Next.js, Redux Toolkit, and
-                hardware-accelerated GSAP motion, I strive to build software
+                Utilizing <strong>React 19</strong>, <strong>Next.js</strong>, <strong>Redux Toolkit</strong>, and
+                hardware-accelerated <strong>GSAP motion</strong>, I strive to build software
                 where architectural discipline matches the clarity of the user
                 interface.
               </p>
@@ -171,8 +173,12 @@ export function AboutSection({ showCta = false }) {
               contracts, and creative frontend collaborations.
             </p>
             <a
-              href="#contact"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-slate-950 text-white font-mono text-xs uppercase tracking-wider hover:bg-slate-800 active:scale-[0.98] transition-all shadow-md"
+              href="/contact"
+              onClick={(e) => {
+                e.preventDefault();
+                navigateTo("/contact");
+              }}
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-slate-950 text-white font-mono text-xs uppercase tracking-wider hover:bg-slate-800 active:scale-[0.98] transition-all shadow-md cursor-pointer"
             >
               <span>Initiate Dialogue</span>
               <ArrowUpRight className="w-3.5 h-3.5 text-slate-400" />

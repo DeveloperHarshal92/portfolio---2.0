@@ -207,15 +207,28 @@ const ProjectPage = ({ project, next }) => {
           );
         })}
         {next && (
-          <footer className="relative h-screen w-full flex items-center justify-center bg-[#edf5ff] z-30">
+          <footer className="relative h-screen w-full flex items-center justify-center overflow-hidden z-30">
+            {/* Background image: next project coverImage / heroImage */}
+            {(next.coverImage || next.heroImage) && (
+              <img
+                src={next.coverImage || next.heroImage}
+                alt={next.title ? `${next.title} preview` : "Next Project"}
+                className="absolute inset-0 w-full h-full object-cover scale-105"
+              />
+            )}
+
+            {/* Dark overlay for contrast */}
+            <div className="absolute inset-0 bg-slate-950/65 backdrop-blur-[2px]" />
+
+            {/* Transparent Next Project CTA button */}
             <div
               onClick={handleNextClick}
-              className="text-center bg-amber-400 hover:bg-amber-300 text-slate-950 px-[3.5rem] py-[2rem] rounded-[1.5rem] flex flex-col gap-[0.8rem] cursor-pointer hover:scale-105 active:scale-95 transition-all shadow-xl select-none"
+              className="relative z-10 text-center bg-transparent hover:bg-white/10 text-white border border-white/30 hover:border-white/60 px-[3.5rem] py-[2rem] rounded-[1.5rem] flex flex-col gap-[0.8rem] cursor-pointer backdrop-blur-md hover:scale-105 active:scale-95 transition-all shadow-2xl select-none group"
             >
-              <span className="text-xs font-mono uppercase tracking-widest text-slate-800">
+              <span className="text-xs font-mono uppercase tracking-widest text-amber-300 group-hover:text-amber-200 transition-colors">
                 Next Project
               </span>
-              <p className="text-[1.5rem] font-medium tracking-tight">
+              <p className="text-[1.5rem] font-medium tracking-tight text-white">
                 {next.title}
               </p>
             </div>

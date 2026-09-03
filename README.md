@@ -108,6 +108,7 @@ portfolio/
 │   │   ├── InfiniteSpiral.jsx  # 3D Math spiral calculation engine
 │   │   ├── Lanyard.jsx         # 3D Rapier physics interactive badge simulation
 │   │   ├── Navbar.jsx          # Top-level header wrapper
+│   │   ├── PortfolioLoader.jsx # 3D ambient purple architectural curve loader & kinetic marquee
 │   │   ├── ProjectPage.jsx     # Pinned stacking case study component
 │   │   ├── SkillsSpiral.jsx    # Pinned scroll-scrubbed skills showcase
 │   │   ├── SmoothScroller.jsx  # Lenis root wrapper

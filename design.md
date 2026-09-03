@@ -102,6 +102,13 @@ The typography establishes deliberate contrast between humanistic editorial pros
   - Left: Grayscale portrait card with location badges, GitHub/LinkedIn links, and direct contact telemetry.
   - Right: High-performance contact form terminal with interactive project scope pill selection (`Full-Stack Web App`, `Creative Motion UI`, `AI Systems / RAG`, `Freelance / Contract`) and asynchronous transmission status.
 
+### 4.8. PortfolioLoader (Architectural 3D Curve Loader & Marquee)
+- **Background Layer**: Soft 3D WebGL scene with ambient purple/lavender lighting, porcelain white architectural pedestal curves, and floating studio rings rendered over the daylight canvas (`#edf5ff`).
+- **Central Dark Stage**: Double-bezel rounded container (`#0a0d12`, `rounded-3xl`, `ring-1 ring-white/10`) with `overflow-hidden`.
+- **Telemetry Header**: Minimal monospace header with live pulse beacon, creator credits ("BYTETOWN LABS / HARSHAL VARADE"), latency metrics, and real-time progress counter (`00%` to `100%`).
+- **Kinetic Marquee**: Massive, geometric ultra-bold typography (`NEOLEAF /// HARSHAL VARADE /// ARCHITECTURAL MOTION`) gliding horizontally across the stage.
+- **Scale & Reveal Outro**: As asset synthesis completes at 100%, the dark container executes a smooth scale expansion (`scale: 1.04`) and clip-path reveal (`clipPath: inset(0% 0% 100% 0%)`, `expo.inOut`), gracefully transitioning into the homepage.
+
 ---
 
 ## 5. Layout & Spatial Architecture
