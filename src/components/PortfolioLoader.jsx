@@ -44,7 +44,7 @@ function buildWavePath({
 export default function PortfolioLoader({
   onComplete,
   duration = 6,
-  label = "Harshal",
+  label = "Sheryian",
 }) {
   const router = useRouter();
   const pathname = usePathname();
@@ -84,7 +84,7 @@ export default function PortfolioLoader({
   const charCount = label?.length || 7;
   const fontSize = Math.min(190, Math.floor(1080 / (charCount * 0.64)));
 
-  const sIndex = useMemo(() => label.toLowerCase().indexOf("s"), [label]);
+  const sIndex = useMemo(() => label.toLowerCase().indexOf("y"), [label]);
   const sLetterRef = useRef(null);
 
   const waveConfig = useMemo(

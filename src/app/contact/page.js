@@ -3,7 +3,7 @@
 import React, { useRef, useState } from "react";
 import gsap, { useGSAP } from "@/libs/gsap";
 import TextReveal from "@/components/TextReveal";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Check } from "lucide-react";
 
 const ENGAGEMENT_TYPES = [
   "Full-time role",
@@ -14,7 +14,23 @@ const ENGAGEMENT_TYPES = [
 
 export function ContactSection() {
   const containerRef = useRef(null);
-  const [engagement, setEngagement] = useState(ENGAGEMENT_TYPES[0]);
+  const [formState, setFormState] = useState({
+    name: "",
+    email: "",
+    engagement: ENGAGEMENT_TYPES[0],
+    message: "",
+  });
+  const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      setSubmitted(true);
+    }, 900);
+  };
 
   useGSAP(
     () => {
@@ -48,65 +64,122 @@ export function ContactSection() {
         </p>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14">
-          {/* Left: form */}
-          <form
-            data-fade
-            className="lg:col-span-8 flex flex-col gap-5"
-            onSubmit={(e) => e.preventDefault()}
-          >
-            <div className="flex flex-wrap gap-2">
-              {ENGAGEMENT_TYPES.map((type) => (
-                <button
-                  key={type}
-                  type="button"
-                  onClick={() => setEngagement(type)}
-                  className={`px-4 py-2 rounded-full text-xs border transition-colors cursor-pointer ${
-                    engagement === type
-                      ? "bg-slate-950 dark:bg-white text-white dark:text-slate-950 border-slate-950 dark:border-white font-medium"
-                      : "bg-white dark:bg-[#0f1626] text-slate-700 dark:text-slate-300 border-[#b7c8de] dark:border-white/15 hover:border-slate-400 dark:hover:border-white/30"
-                  }`}
-                >
-                  {type}
-                </button>
-              ))}
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <label className="flex flex-col gap-1.5">
-                <span className="text-xs text-slate-500 dark:text-slate-400">Name</span>
-                <input
-                  type="text"
-                  required
-                  className="bg-white dark:bg-[#0f1626] border border-[#b7c8de] dark:border-white/15 text-slate-900 dark:text-slate-100 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-slate-400 dark:focus:ring-sky-500/40 transition-colors"
-                />
-              </label>
-              <label className="flex flex-col gap-1.5">
-                <span className="text-xs text-slate-500 dark:text-slate-400">Email</span>
-                <input
-                  type="email"
-                  required
-                  className="bg-white dark:bg-[#0f1626] border border-[#b7c8de] dark:border-white/15 text-slate-900 dark:text-slate-100 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-slate-400 dark:focus:ring-sky-500/40 transition-colors"
-                />
-              </label>
-            </div>
-
-            <label className="flex flex-col gap-1.5">
-              <span className="text-xs text-slate-500 dark:text-slate-400">Message</span>
-              <textarea
-                required
-                rows={4}
-                className="bg-white dark:bg-[#0f1626] border border-[#b7c8de] dark:border-white/15 text-slate-900 dark:text-slate-100 rounded-lg px-4 py-2.5 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-slate-400 dark:focus:ring-sky-500/40 transition-colors"
-              />
-            </label>
-
-            <button
-              type="submit"
-              className="self-start inline-flex items-center gap-2 px-7 py-3 rounded-full bg-slate-950 dark:bg-white text-white dark:text-slate-950 font-mono text-xs uppercase tracking-wider hover:bg-slate-800 dark:hover:bg-slate-200 active:scale-[0.98] transition-all shadow-sm cursor-pointer"
+          {/* Left: form / success state */}
+          {submitted ? (
+            <div
+              data-fade
+              className="lg:col-span-8 flex flex-col items-center justify-center text-center gap-4 py-16 px-6 rounded-2xl bg-white/60 dark:bg-white/5 border border-[#b7c8de]/70 dark:border-white/10 backdrop-blur-md shadow-sm transition-all"
             >
-              <span>Send message</span>
-              <ArrowUpRight className="w-3.5 h-3.5 text-slate-400 dark:text-slate-600" />
-            </button>
-          </form>
+              <div className="w-16 h-16 rounded-full bg-emerald-100/80 dark:bg-emerald-500/15 border border-emerald-300/80 dark:border-emerald-500/30 flex items-center justify-center text-emerald-600 dark:text-emerald-400 shadow-sm">
+                <Check className="w-8 h-8" />
+              </div>
+              <h3 className="text-2xl sm:text-3xl font-medium text-slate-950 dark:text-white">
+                Message Received
+              </h3>
+              <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-md leading-relaxed">
+                Thank you for reaching out, {formState.name || "friend"}. Your
+                message has been received and I will follow up promptly.
+              </p>
+              <button
+                type="button"
+                onClick={() => {
+                  setSubmitted(false);
+                  setFormState({
+                    name: "",
+                    email: "",
+                    engagement: ENGAGEMENT_TYPES[0],
+                    message: "",
+                  });
+                }}
+                className="mt-3 px-6 py-2.5 rounded-full bg-slate-950 dark:bg-white text-white dark:text-slate-950 font-mono text-xs uppercase tracking-wider hover:bg-slate-800 dark:hover:bg-slate-200 active:scale-[0.98] transition-all shadow-sm cursor-pointer"
+              >
+                Send Another Message
+              </button>
+            </div>
+          ) : (
+            <form
+              data-fade
+              className="lg:col-span-8 flex flex-col gap-5"
+              onSubmit={handleSubmit}
+            >
+              <div className="flex flex-wrap gap-2">
+                {ENGAGEMENT_TYPES.map((type) => (
+                  <button
+                    key={type}
+                    type="button"
+                    onClick={() =>
+                      setFormState((prev) => ({ ...prev, engagement: type }))
+                    }
+                    className={`px-4 py-2 rounded-full text-xs border transition-colors cursor-pointer ${
+                      formState.engagement === type
+                        ? "bg-slate-950 dark:bg-white text-white dark:text-slate-950 border-slate-950 dark:border-white font-medium"
+                        : "bg-white dark:bg-[#0f1626] text-slate-700 dark:text-slate-300 border-[#b7c8de] dark:border-white/15 hover:border-slate-400 dark:hover:border-white/30"
+                    }`}
+                  >
+                    {type}
+                  </button>
+                ))}
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <label className="flex flex-col gap-1.5">
+                  <span className="text-xs text-slate-500 dark:text-slate-400">
+                    Name
+                  </span>
+                  <input
+                    type="text"
+                    required
+                    value={formState.name}
+                    onChange={(e) =>
+                      setFormState((prev) => ({ ...prev, name: e.target.value }))
+                    }
+                    placeholder="Jane Doe"
+                    className="bg-white dark:bg-[#0f1626] border border-[#b7c8de] dark:border-white/15 text-slate-900 dark:text-slate-100 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-slate-400 dark:focus:ring-sky-500/40 transition-colors"
+                  />
+                </label>
+                <label className="flex flex-col gap-1.5">
+                  <span className="text-xs text-slate-500 dark:text-slate-400">
+                    Email
+                  </span>
+                  <input
+                    type="email"
+                    required
+                    value={formState.email}
+                    onChange={(e) =>
+                      setFormState((prev) => ({ ...prev, email: e.target.value }))
+                    }
+                    placeholder="jane@company.com"
+                    className="bg-white dark:bg-[#0f1626] border border-[#b7c8de] dark:border-white/15 text-slate-900 dark:text-slate-100 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-slate-400 dark:focus:ring-sky-500/40 transition-colors"
+                  />
+                </label>
+              </div>
+
+              <label className="flex flex-col gap-1.5">
+                <span className="text-xs text-slate-500 dark:text-slate-400">
+                  Message
+                </span>
+                <textarea
+                  required
+                  rows={4}
+                  value={formState.message}
+                  onChange={(e) =>
+                    setFormState((prev) => ({ ...prev, message: e.target.value }))
+                  }
+                  placeholder="Tell me about your project or role..."
+                  className="bg-white dark:bg-[#0f1626] border border-[#b7c8de] dark:border-white/15 text-slate-900 dark:text-slate-100 rounded-lg px-4 py-2.5 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-slate-400 dark:focus:ring-sky-500/40 transition-colors"
+                />
+              </label>
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="self-start inline-flex items-center gap-2 px-7 py-3 rounded-full bg-slate-950 dark:bg-white text-white dark:text-slate-950 font-mono text-xs uppercase tracking-wider hover:bg-slate-800 dark:hover:bg-slate-200 active:scale-[0.98] transition-all shadow-sm cursor-pointer disabled:opacity-50"
+              >
+                <span>{loading ? "Transmitting..." : "Send message"}</span>
+                <ArrowUpRight className="w-3.5 h-3.5 text-slate-400 dark:text-slate-600" />
+              </button>
+            </form>
+          )}
 
           {/* Right: direct info */}
           <div data-fade className="lg:col-span-4 flex flex-col gap-7">
