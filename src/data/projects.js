@@ -152,7 +152,7 @@ export const projects = [
     featured: true,
     assetsTemporary: true,
     githubLink: "https://github.com/DeveloperHarshal92/Smart-Trolly-2.0.git",
-    liveLink: "",
+    liveLink: "https://smart-trolly-2-0.onrender.com/",
     techStack: [
       "React 19",
       "Three.js",
@@ -427,8 +427,8 @@ export const projects = [
     gallery: [
       "https://images.pexels.com/photos/4126704/pexels-photo-4126704.jpeg",
       "https://images.pexels.com/photos/16759061/pexels-photo-16759061.jpeg",
-      "https://images.pexels.com/photos/15769242/pexels-photo-15769242.jpeg",
-      "https://images.pexels.com/photos/5809286/pexels-photo-5809286.jpeg",
+      "https://images.pexels.com/photos/6875113/pexels-photo-6875113.jpeg",
+      "https://images.pexels.com/photos/10936580/pexels-photo-10936580.jpeg",
       "https://images.pexels.com/photos/7054757/pexels-photo-7054757.jpeg",
     ],
     tags: [

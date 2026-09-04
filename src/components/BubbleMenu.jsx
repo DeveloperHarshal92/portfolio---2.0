@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect } from "react";
 import gsap from "@/libs/gsap";
 import useViewTransition from "@/hooks/useViewTransition";
 import { cn } from "@/libs/utils";
+import ThemeToggle from "./ThemeToggle";
 
 const DEFAULT_ITEMS = [
   {
@@ -200,38 +201,47 @@ export default function BubbleMenu({
         <a
           href="/"
           onClick={(e) => handleItemClick(e, "/")}
-          className="h-11 md:h-12 px-4 md:px-5 inline-flex items-center gap-2.5 transition-all duration-300 cursor-pointer no-underline group pointer-events-auto"
+          className="h-11 md:h-12 px-3 md:px-4 inline-flex items-center gap-2.5 transition-all duration-300 cursor-pointer no-underline group pointer-events-auto rounded-full hover:bg-slate-900/5 dark:hover:bg-white/5"
           aria-label="Home"
         >
           <span
-            className="text-[1.4rem] uppercase font-bold tracking-wider text-slate-900"
+            className="text-[1.1rem] sm:text-[1.4rem] uppercase font-bold tracking-wider text-slate-900 dark:text-slate-100 transition-colors duration-300 truncate max-w-[190px] sm:max-w-none"
             style={{ fontFamily: "var(--font-mono)" }}
           >
             {typeof logo === "string" ? logo : logo || "Harshal Varade"}
           </span>
         </a>
 
-        {/* Toggle Button */}
-        <button
-          type="button"
-          onClick={handleToggle}
-          aria-label={menuAriaLabel}
-          aria-pressed={isMenuOpen}
-          className="w-11 h-11 md:w-12 md:h-12 backdrop-blur-md flex flex-col items-center justify-center gap-1 pointer-events-auto hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer group"
-        >
-          <span
+        {/* Right Actions: Theme Toggle + Menu Hamburger Button */}
+        <div className="flex items-center gap-2.5 sm:gap-3 pointer-events-auto">
+          <ThemeToggle />
+
+          <button
+            type="button"
+            onClick={handleToggle}
+            aria-label={menuAriaLabel}
+            aria-pressed={isMenuOpen}
             className={cn(
-              "w-4 h-0.5 bg-slate-900 rounded-full transition-all duration-300 origin-center",
-              isMenuOpen && "translate-y-1.5 rotate-45 bg-slate-950",
+              "w-11 h-11 md:w-12 md:h-12 rounded-full backdrop-blur-md flex flex-col items-center justify-center gap-1.5 transition-all duration-300 cursor-pointer group select-none",
+              "bg-white/80 dark:bg-[#0c121e]/80 ring-1 ring-slate-900/10 dark:ring-white/15",
+              "shadow-[0_2px_8px_rgba(10,13,18,0.06)] dark:shadow-[0_2px_12px_rgba(0,0,0,0.4)]",
+              "hover:scale-[1.04] active:scale-[0.94]",
             )}
-          />
-          <span
-            className={cn(
-              "w-2.5 group-hover:w-4 h-0.5 bg-slate-900 rounded-full transition-all duration-300 origin-center",
-              isMenuOpen && "w-4 -translate-y-0 -rotate-45 bg-slate-950",
-            )}
-          />
-        </button>
+          >
+            <span
+              className={cn(
+                "w-4 h-0.5 bg-slate-900 dark:bg-slate-100 rounded-full transition-all duration-300 origin-center",
+                isMenuOpen && "translate-y-2 rotate-45 bg-slate-950 dark:bg-white",
+              )}
+            />
+            <span
+              className={cn(
+                "w-2.5 group-hover:w-4 h-0.5 bg-slate-900 dark:bg-slate-100 rounded-full transition-all duration-300 origin-center",
+                isMenuOpen && "w-4 -translate-y-0 -rotate-45 bg-slate-950 dark:bg-white",
+              )}
+            />
+          </button>
+        </div>
       </nav>
 
       {/* Fullscreen Backdrop & Flush Gapless Staircase Strips Overlay */}
@@ -239,7 +249,7 @@ export default function BubbleMenu({
         <div
           ref={overlayRef}
           className={cn(
-            "inset-0 z-40 flex flex-col justify-center items-end bg-[#edf5ff]/80 backdrop-blur-xl select-none overflow-hidden isolate",
+            "inset-0 z-40 flex flex-col justify-center items-end bg-[#edf5ff]/85 dark:bg-[#07090e]/90 backdrop-blur-2xl select-none overflow-hidden isolate transition-colors duration-300",
             useFixedPosition ? "fixed" : "absolute",
           )}
           aria-hidden={!isMenuOpen}
@@ -273,7 +283,8 @@ export default function BubbleMenu({
                     aria-label={item.ariaLabel || item.label}
                     className={cn(
                       "group w-full flex items-center justify-between px-6 md:px-10 py-6 md:py-8 rounded-none border-t border-l border-r-0 transition-all duration-300 no-underline cursor-pointer overflow-hidden shadow-md",
-                      "bg-white/95 text-slate-900 border-[#b7c8de]/85 hover:bg-slate-950 hover:text-white hover:border-slate-950 hover:-translate-x-3 hover:shadow-2xl hover:z-20 backdrop-blur-md z-10",
+                      "bg-white/95 dark:bg-[#0d131f]/95 text-slate-900 dark:text-slate-100 border-[#b7c8de]/85 dark:border-white/10",
+                      "hover:bg-slate-950 dark:hover:bg-white hover:text-white dark:hover:text-slate-950 hover:border-slate-950 dark:hover:border-white hover:-translate-x-3 hover:shadow-2xl hover:z-20 backdrop-blur-md z-10",
                       idx === menuItems.length - 1 && "border-b",
                     )}
                   >
@@ -286,7 +297,7 @@ export default function BubbleMenu({
                     >
                       <div className="flex flex-col">
                         <span
-                          className="text-2xl sm:text-3xl md:text-4xl font-light uppercase tracking-tight text-slate-950 group-hover:text-white transition-colors duration-300 whitespace-nowrap"
+                          className="text-2xl sm:text-3xl md:text-4xl font-light uppercase tracking-tight text-slate-950 dark:text-slate-100 group-hover:text-white dark:group-hover:text-slate-950 transition-colors duration-300 whitespace-nowrap"
                           style={{ fontFamily: "var(--font-mono)" }}
                         >
                           {item.label}

@@ -2,6 +2,7 @@ import Navbar from "@/components/Navbar";
 import PortfolioLoader from "@/components/PortfolioLoader";
 import "./globals.css";
 import SmoothScroller from "@/components/SmoothScroller";
+import ThemeProvider from "@/components/ThemeProvider";
 
 import { Inter, JetBrains_Mono } from "next/font/google";
 
@@ -18,26 +19,25 @@ export const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata = {
-  title: "Cohort 2.0 Portfolio",
-  description: "My portfolio project",
+  title: "Harshal Varade | Systems & Full Stack Developer",
+  description: "Full-stack developer crafting production systems and high-end interactive digital experiences.",
 };
 
-// const filterDeprecationsScript = `
-//   (function() {
-//     var origWarn = console.warn;
-//     console.warn = function() {
-//       if (arguments[0] && typeof arguments[0] === 'string') {
-//         if (
-//           arguments[0].indexOf('THREE.Clock: This module has been deprecated') !== -1 ||
-//           arguments[0].indexOf('using deprecated parameters for the initialization function') !== -1
-//         ) {
-//           return;
-//         }
-//       }
-//       return origWarn.apply(console, arguments);
-//     };
-//   })();
-// `;
+const themeInitScript = `
+  (function() {
+    try {
+      var stored = localStorage.getItem('portfolio-theme');
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (stored === 'dark' || (!stored && prefersDark)) {
+        document.documentElement.classList.add('dark');
+        document.documentElement.style.colorScheme = 'dark';
+      } else {
+        document.documentElement.classList.remove('dark');
+        document.documentElement.style.colorScheme = 'light';
+      }
+    } catch (e) {}
+  })();
+`;
 
 export default function RootLayout({ children }) {
   return (
@@ -47,14 +47,17 @@ export default function RootLayout({ children }) {
       className={`${inter.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
       <head>
-        {/* <script
-          dangerouslySetInnerHTML={{ __html: filterDeprecationsScript }}
-        /> */}
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
-      <body className="min-h-full flex flex-col" suppressHydrationWarning>
-        <PortfolioLoader />
-        <Navbar />
-        <SmoothScroller>{children}</SmoothScroller>
+      <body
+        className="min-h-full flex flex-col bg-[#edf5ff] dark:bg-[#07090e] text-[#0a0d12] dark:text-[#f1f5f9] transition-colors duration-400 selection:bg-sky-500 selection:text-white"
+        suppressHydrationWarning
+      >
+        <ThemeProvider>
+          <PortfolioLoader />
+          <Navbar />
+          <SmoothScroller>{children}</SmoothScroller>
+        </ThemeProvider>
       </body>
     </html>
   );

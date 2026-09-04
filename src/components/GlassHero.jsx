@@ -167,7 +167,7 @@ export default function GlassHero() {
     <section
       id="home"
       ref={heroRef}
-      className="relative isolate overflow-hidden min-w-80 min-h-dvh h-dvh bg-[#edf5ff] text-[#0a0d12]"
+      className="relative isolate overflow-hidden min-w-80 min-h-dvh h-dvh bg-[#edf5ff] dark:bg-[#07090e] text-[#0a0d12] dark:text-[#f1f5f9] transition-colors duration-400"
       style={{
         "--reveal-x": "-999px",
         "--reveal-y": "-999px",
@@ -180,6 +180,12 @@ export default function GlassHero() {
         aria-hidden="true"
         className="absolute inset-0 bg-[url('/images/Base_image_desktop.png')] max-[767px]:bg-[url('/images/Base_image_mobile.png')] bg-cover bg-center bg-no-repeat gh-base-landscape"
         style={{ opacity: 0 }}
+      />
+
+      {/* Dark mode ethereal depth wash */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 bg-gradient-to-b from-[#07090e]/10 via-[#07090e]/40 to-[#07090e]/85 opacity-0 dark:opacity-100 pointer-events-none transition-opacity duration-500"
       />
 
       {/* Reveal image — masked by CSS-variable radial gradient (kept in glass-hero.css) */}
@@ -208,7 +214,7 @@ export default function GlassHero() {
           className="absolute top-[34%] max-[767px]:top-[15%] left-[max(5.6vw,2rem)] max-[767px]:left-5 max-[767px]:w-[62%] m-0"
         >
           <h1
-            className="m-0 font-normal leading-[0.93] tracking-[-0.085em] text-[clamp(5.4rem,6.2vw,6.8rem)] max-[767px]:text-[clamp(2.7rem,12.5vw,3.8rem)] max-[767px]:leading-[0.87]"
+            className="m-0 font-normal leading-[0.93] tracking-[-0.085em] text-[clamp(5.4rem,6.2vw,6.8rem)] max-[767px]:text-[clamp(2.7rem,12.5vw,3.8rem)] max-[767px]:leading-[0.87] text-slate-950 dark:text-slate-50 transition-colors"
             style={{ fontFamily: "var(--font-sans)" }}
           >
             Form
@@ -227,7 +233,7 @@ export default function GlassHero() {
         >
           <TextReveal splitBy="words" trigger="mount" delay="1.35" duration={0.9} stagger={0.03} ease="power4.out">
             <p
-            className="m-0 text-[clamp(1rem,1.1vw,1.15rem)] leading-[1.45] tracking-[-0.01em]"
+            className="m-0 text-[clamp(1rem,1.1vw,1.15rem)] leading-[1.45] tracking-[-0.01em] text-slate-700 dark:text-slate-300 transition-colors"
             style={{ fontFamily: "var(--font-sans)" }}
           >
             I design and build systems where the engineering underneath is as
@@ -239,7 +245,7 @@ export default function GlassHero() {
               href="https://www.linkedin.com/in/harshal-varade-07945a3a3"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 min-h-[44px] px-[1.5rem] rounded-full bg-white text-[#0a0d12] text-[0.8rem] tracking-[0.04em] uppercase no-underline shadow-[0_1px_2px_rgba(10,13,18,0.08),0_8px_24px_rgba(10,13,18,0.06)] transition-[transform,box-shadow,background-color] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-px hover:shadow-[0_2px_4px_rgba(10,13,18,0.1),0_12px_28px_rgba(10,13,18,0.09)] hover:bg-[#f8fafd] focus-visible:-translate-y-px focus-visible:outline-none cursor-pointer"
+              className="inline-flex items-center justify-center gap-2 min-h-[44px] px-[1.5rem] rounded-full bg-white dark:bg-[#0f1626] text-[#0a0d12] dark:text-[#f1f5f9] text-[0.8rem] tracking-[0.04em] uppercase no-underline ring-1 ring-slate-900/10 dark:ring-white/15 shadow-[0_1px_2px_rgba(10,13,18,0.08),0_8px_24px_rgba(10,13,18,0.06)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.5)] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-px hover:bg-[#f8fafd] dark:hover:bg-[#162034] active:scale-[0.98] focus-visible:-translate-y-px focus-visible:outline-none cursor-pointer"
               style={{ fontFamily: "var(--font-mono)" }}
               aria-label="LinkedIn"
             >
@@ -263,7 +269,7 @@ export default function GlassHero() {
               href="https://github.com/DeveloperHarshal92"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 min-h-[44px] px-[1.5rem] rounded-full bg-white text-[#0a0d12] text-[0.8rem] tracking-[0.04em] uppercase no-underline shadow-[0_1px_2px_rgba(10,13,18,0.08),0_8px_24px_rgba(10,13,18,0.06)] transition-[transform,box-shadow,background-color] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-px hover:shadow-[0_2px_4px_rgba(10,13,18,0.1),0_12px_28px_rgba(10,13,18,0.09)] hover:bg-[#f8fafd] focus-visible:-translate-y-px focus-visible:outline-none cursor-pointer"
+              className="inline-flex items-center justify-center gap-2 min-h-[44px] px-[1.5rem] rounded-full bg-white dark:bg-[#0f1626] text-[#0a0d12] dark:text-[#f1f5f9] text-[0.8rem] tracking-[0.04em] uppercase no-underline ring-1 ring-slate-900/10 dark:ring-white/15 shadow-[0_1px_2px_rgba(10,13,18,0.08),0_8px_24px_rgba(10,13,18,0.06)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.5)] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-px hover:bg-[#f8fafd] dark:hover:bg-[#162034] active:scale-[0.98] focus-visible:-translate-y-px focus-visible:outline-none cursor-pointer"
               style={{ fontFamily: "var(--font-mono)" }}
               aria-label="GitHub"
             >

@@ -81,7 +81,7 @@ const CoverflowCard = forwardRef(
           onMouseEnter={onEnter}
           onMouseLeave={onLeave}
           aria-label={slideSlug}
-          className="relative block w-full h-full rounded-3xl overflow-hidden bg-slate-950 shadow-2xl border border-white/20 transition-all duration-300 hover:border-white/50 cursor-pointer"
+          className="relative block w-full h-full rounded-3xl overflow-hidden bg-slate-950 shadow-2xl border border-white/20 dark:border-white/10 transition-all duration-300 hover:border-white/50 dark:hover:border-white/30 cursor-pointer"
         >
           <img
             ref={imgRef}
@@ -258,7 +258,7 @@ export function CoverflowCarousel({
     <div
       ref={wrapperRef}
       className={cn(
-        "relative w-full h-screen min-h-[100dvh] flex flex-col justify-between items-center select-none overflow-hidden bg-[#edf5ff] py-8 sm:py-12",
+        "relative w-full h-screen min-h-[100dvh] flex flex-col justify-between items-center select-none overflow-hidden bg-[#edf5ff] dark:bg-[#07090e] py-8 sm:py-12 transition-colors duration-400",
         className,
       )}
       style={{ "--cf-card": cardWidth }}
@@ -267,7 +267,7 @@ export function CoverflowCarousel({
           CENTER HEADER: ACTIVE PROJECT NUMBER & SLUG REVEAL
           ========================================================================= */}
       <div className="w-full max-w-4xl mx-auto px-6 pt-4 flex flex-col items-center text-center z-20 pointer-events-auto">
-        <span className="text-xs font-mono uppercase tracking-[0.25em] text-slate-500 mb-2 pointer-events-none">
+        <span className="text-xs font-mono uppercase tracking-[0.25em] text-slate-500 dark:text-slate-400 mb-2 pointer-events-none transition-colors">
           {currentProject.number} / Selected Work
         </span>
 
@@ -291,7 +291,7 @@ export function CoverflowCarousel({
                 splitBy="words"
                 duration={0.5}
               >
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-normal leading-tight tracking-tight text-slate-950 uppercase font-mono group-hover:text-sky-600 transition-colors">
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-normal leading-tight tracking-tight text-slate-950 dark:text-slate-100 uppercase font-mono group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors">
                   {currentProject.slug}
                 </h2>
               </TextReveal>
@@ -344,7 +344,7 @@ export function CoverflowCarousel({
           BOTTOM TELEMETRY STATUS
           ========================================================================= */}
       <div className="w-full max-w-md mx-auto pb-4 flex items-center justify-center gap-3 z-20 pointer-events-none">
-        <span className="text-[11px] font-mono text-slate-500 tracking-widest uppercase">
+        <span className="text-[11px] font-mono text-slate-500 dark:text-slate-400 tracking-widest uppercase transition-colors">
           [ {displayIndex + 1} / {items.length} ]
         </span>
       </div>

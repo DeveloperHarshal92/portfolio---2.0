@@ -113,7 +113,7 @@ const CarouselCard = ({ project, onHoverStart, onHoverEnd }) => {
           splitBy="chars"
           className="flex justify-center"
         >
-          <span className="text-[1rem] font-mono tracking-widest text-slate-500 uppercase text-center">
+          <span className="text-[1rem] font-mono tracking-widest text-slate-500 dark:text-slate-400 uppercase text-center transition-colors">
             {project.number}
           </span>
         </TextReveal>
@@ -124,7 +124,7 @@ const CarouselCard = ({ project, onHoverStart, onHoverEnd }) => {
           splitBy="words"
           className="flex justify-center"
         >
-          <h3 className="text-[3rem] sm:text-[1.5rem] font-medium text-slate-900 leading-tight tracking-tight text-center">
+          <h3 className="text-[3rem] sm:text-[1.5rem] font-medium text-slate-900 dark:text-slate-100 leading-tight tracking-tight text-center transition-colors">
             {project.slug}
           </h3>
         </TextReveal>

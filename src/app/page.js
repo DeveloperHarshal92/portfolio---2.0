@@ -7,7 +7,7 @@ import { ContactSection } from "./contact/page";
 
 export default function Home() {
   return (
-    <div className="relative w-full bg-[#edf5ff] text-[#0a0d12]">
+    <div className="relative w-full bg-[#edf5ff] dark:bg-[#07090e] text-[#0a0d12] dark:text-[#f1f5f9] transition-colors duration-400">
       {/* 01. Home Canvas & Introduction */}
       <GlassHero />
 

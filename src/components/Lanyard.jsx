@@ -3,6 +3,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, extend, useFrame } from "@react-three/fiber";
 import { useTexture } from "@react-three/drei";
+import { useTheme } from "@/components/ThemeProvider";
 import {
   BallCollider,
   CuboidCollider,
@@ -52,6 +53,7 @@ export default function Lanyard({
   lanyardWidth = 1.1,
   className = "",
 }) {
+  const { isDark } = useTheme();
   const [isMobile, setIsMobile] = useState(
     () => typeof window !== "undefined" && window.innerWidth < 768
   );
@@ -84,6 +86,7 @@ export default function Lanyard({
         <Physics gravity={gravity} timeStep={isMobile ? 1 / 30 : 1 / 60}>
           <Band
             isMobile={isMobile}
+            isDark={isDark}
             frontImage={frontImage}
             backImage={backImage}
             imageFit={imageFit}
@@ -100,6 +103,7 @@ function Band({
   maxSpeed = 50,
   minSpeed = 0,
   isMobile = false,
+  isDark = false,
   frontImage = null,
   imageFit = "cover",
   lanyardImage = null,
@@ -125,7 +129,6 @@ function Band({
     linearDamping: 3.5,
   };
 
-  const strapTexture = useTexture(lanyardImage || BLANK_PIXEL);
   const frontTex = useTexture(frontImage || BLANK_PIXEL);
 
   // 2048 x 3072 Ultra-Crisp Realistic Engineering ID Badge
@@ -236,8 +239,15 @@ function Band({
     ctx.fillStyle = "#f8fafc";
     ctx.fillRect(px, py, pw, ph);
 
-    if (frontTex.image && frontImage) {
+    if (
+      frontTex?.image &&
+      frontTex.image.complete &&
+      (frontTex.image.naturalWidth || frontTex.image.width) > 0 &&
+      (frontTex.image.naturalHeight || frontTex.image.height) > 0
+    ) {
       const img = frontTex.image;
+      const imgWidth = img.naturalWidth || img.width;
+      const imgHeight = img.naturalHeight || img.height;
       ctx.save();
       ctx.beginPath();
       ctx.roundRect(px, py, pw, ph, 32);
@@ -245,10 +255,10 @@ function Band({
 
       const scale =
         imageFit === "contain"
-          ? Math.min(pw / img.width, ph / img.height)
-          : Math.max(pw / img.width, ph / img.height);
-      const dw = img.width * scale;
-      const dh = img.height * scale;
+          ? Math.min(pw / imgWidth, ph / imgHeight)
+          : Math.max(pw / imgWidth, ph / imgHeight);
+      const dw = imgWidth * scale;
+      const dh = imgHeight * scale;
       const dx = px + (pw - dw) / 2;
       const dy = py + (ph - dh) / 2;
 
@@ -316,7 +326,9 @@ function Band({
     const texture = new THREE.CanvasTexture(canvas);
     texture.colorSpace = THREE.SRGBColorSpace;
     texture.anisotropy = 16;
-    texture.needsUpdate = true;
+    texture.generateMipmaps = false;
+    texture.minFilter = THREE.LinearFilter;
+    texture.magFilter = THREE.LinearFilter;
     return texture;
   }, [frontImage, imageFit, frontTex]);
 
@@ -366,9 +378,19 @@ function Band({
     const texture = new THREE.CanvasTexture(canvas);
     texture.colorSpace = THREE.SRGBColorSpace;
     texture.anisotropy = 16;
-    texture.needsUpdate = true;
+    texture.generateMipmaps = false;
+    texture.minFilter = THREE.LinearFilter;
+    texture.magFilter = THREE.LinearFilter;
     return texture;
   }, []);
+
+  // Dispose WebGL textures on unmount or refresh to prevent GPU memory leaks
+  useEffect(() => {
+    return () => {
+      frontCardMap?.dispose();
+      backCardMap?.dispose();
+    };
+  }, [frontCardMap, backCardMap]);
 
   const [curve] = useState(
     () =>
@@ -475,7 +497,6 @@ function Band({
   });
 
   curve.curveType = "chordal";
-  strapTexture.wrapS = strapTexture.wrapT = THREE.RepeatWrapping;
 
   return (
     <>
@@ -604,11 +625,12 @@ function Band({
         </RigidBody>
       </group>
 
-      {/* Lanyard Band (Dark Slate Ribbon) */}
+      {/* Lanyard Band (Adaptive String / Ribbon) */}
       <mesh ref={band}>
         <meshLineGeometry />
         <meshLineMaterial
-          color="#0f172a"
+          key={isDark ? "dark-strap" : "light-strap"}
+          color={isDark ? "#f1f5f9" : "#0f172a"}
           depthTest={false}
           resolution={isMobile ? [1000, 2000] : [1000, 1000]}
           useMap={false}

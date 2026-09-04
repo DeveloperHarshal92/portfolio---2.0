@@ -48,6 +48,11 @@ const InfiniteSpiral = forwardRef(function InfiniteSpiral(
   const dragMovedRef = useRef(false);
   const isExternalDrivenRef = useRef(false);
   const lastActiveIndexRef = useRef(-1);
+  const onActiveChangeRef = useRef(onActiveChange);
+
+  useEffect(() => {
+    onActiveChangeRef.current = onActiveChange;
+  }, [onActiveChange]);
 
   const normalizedItems = useMemo(
     () =>
@@ -156,8 +161,8 @@ const InfiniteSpiral = forwardRef(function InfiniteSpiral(
       const activeIdx = modulo(Math.round(progressRef.current), count);
       if (activeIdx !== lastActiveIndexRef.current) {
         lastActiveIndexRef.current = activeIdx;
-        if (onActiveChange) {
-          onActiveChange(activeIdx);
+        if (onActiveChangeRef.current) {
+          onActiveChangeRef.current(activeIdx);
         }
       }
 
@@ -222,7 +227,6 @@ const InfiniteSpiral = forwardRef(function InfiniteSpiral(
     edgeBlur,
     pauseOnHover,
     scrollMultiplier,
-    onActiveChange,
   ]);
 
   const rootStyle = {
@@ -314,7 +318,8 @@ const InfiniteSpiral = forwardRef(function InfiniteSpiral(
                 className="infinite-spiral__image"
                 src={item.src}
                 alt={item.alt}
-                loading={index < 6 ? "eager" : "lazy"}
+                loading="lazy"
+                decoding="async"
                 draggable={false}
                 style={{
                   width: cardWidth,

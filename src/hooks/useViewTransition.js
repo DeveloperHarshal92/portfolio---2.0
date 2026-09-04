@@ -6,6 +6,13 @@ import { useCallback } from "react";
 
 const STRIP_COUNT = 20;
 
+const getStripColor = () => {
+  if (typeof document === "undefined") return "#0a0d12";
+  return document.documentElement.classList.contains("dark")
+    ? "#ffffff"
+    : "#0a0d12";
+};
+
 const removeOverlay = () => {
   if (typeof document === "undefined") return;
   const element = document.getElementById("page-transition-overlay");
@@ -17,6 +24,7 @@ const removeOverlay = () => {
 
 const createStrips = () => {
   removeOverlay();
+  const stripColor = getStripColor();
 
   const overlay = document.createElement("div");
   overlay.id = "page-transition-overlay";
@@ -37,13 +45,13 @@ const createStrips = () => {
       flex: 1 0 calc(100% / ${STRIP_COUNT} + 1px);
       margin-right: -1px;
       height: 102%;
-      background-color: #0a0d12;
+      background-color: ${stripColor};
       transform: scaleY(0) translateZ(0);
       transform-origin: bottom;
       will-change: transform;
       backface-visibility: hidden;
       -webkit-backface-visibility: hidden;
-      outline: 1px solid #0a0d12;
+      outline: 1px solid ${stripColor};
     `;
     overlay.appendChild(strip);
   }
@@ -58,6 +66,7 @@ export const revealFromStrips = (onComplete) => {
     return;
   }
   removeOverlay();
+  const stripColor = getStripColor();
 
   const overlay = document.createElement("div");
   overlay.id = "page-transition-overlay";
@@ -78,13 +87,13 @@ export const revealFromStrips = (onComplete) => {
       flex: 1 0 calc(100% / ${STRIP_COUNT} + 1px);
       margin-right: -1px;
       height: 102%;
-      background-color: #0a0d12;
+      background-color: ${stripColor};
       transform: scaleY(1) translateZ(0);
       transform-origin: top;
       will-change: transform;
       backface-visibility: hidden;
       -webkit-backface-visibility: hidden;
-      outline: 1px solid #0a0d12;
+      outline: 1px solid ${stripColor};
     `;
     overlay.appendChild(strip);
   }
